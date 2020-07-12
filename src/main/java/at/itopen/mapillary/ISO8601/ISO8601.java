@@ -21,7 +21,7 @@ public class ISO8601 {
      * Transform Calendar to ISO 8601 string.
      */
     public static String fromDate(final Date date) {
-        String formatted = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ")
+        String formatted = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSZ")
                 .format(date);
         return formatted.substring(0, 22) + ":" + formatted.substring(22);
     }
@@ -41,11 +41,12 @@ public class ISO8601 {
         Calendar calendar = GregorianCalendar.getInstance();
         String s = iso8601string.replace("Z", "+00:00");
         try {
-            s = s.substring(0, 22) + s.substring(23);  // to get rid of the ":"
+            int pos = s.lastIndexOf(':');
+            s = s.substring(0, pos) + s.substring(pos + 1);  // to get rid of the ":"
         } catch (IndexOutOfBoundsException e) {
             throw new ParseException("Invalid length", 0);
         }
-        Date date = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ").parse(s);
+        Date date = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSZ").parse(s);
         return date;
     }
 }

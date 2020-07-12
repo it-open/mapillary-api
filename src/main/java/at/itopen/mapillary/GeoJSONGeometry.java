@@ -15,7 +15,7 @@ import java.util.List;
 public class GeoJSONGeometry {
 
     private String type;
-    private List<Double> coordinates;
+    private List<List<Double>> coordinates;
 
     public GeoJSONGeometry() {
         coordinates = new ArrayList<>();
@@ -38,14 +38,14 @@ public class GeoJSONGeometry {
     /**
      * @return the coordinates
      */
-    public List<Double> getCoordinates() {
+    public List<List<Double>> getCoordinates() {
         return coordinates;
     }
 
     /**
      * @param coordinates the coordinates to set
      */
-    public void setCoordinates(List<Double> coordinates) {
+    public void setCoordinates(List<List<Double>> coordinates) {
         this.coordinates = coordinates;
     }
 

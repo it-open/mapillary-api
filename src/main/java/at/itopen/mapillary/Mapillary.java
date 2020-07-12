@@ -26,7 +26,7 @@ import java.util.logging.Logger;
  */
 public class Mapillary {
 
-    private static String rootEndpoint = "http://a.mapillary.com/v3";
+    private static String rootEndpoint = "https://a.mapillary.com/v3";
     private static String ClientID = "UzZRbjZEUm1jNGFsNi1CS3g3RjNydzpmYjM2MDJiNDA1ZGE1MDYw";
     private static String ClientSecret = "ZGE5MTMyOGZjODQzNjM1ZDdhMTVjMDEwYzJjNjIyYWQ=";
     private static String RedirectUrl = "http://localhost:9876/token";
@@ -52,6 +52,7 @@ public class Mapillary {
             @Override
             public void Call(Conversion conversion, Map<String, String> params) {
                 access_token = conversion.getRequest().getParam("access_token");
+                System.out.println(access_token);
                 access = access_token != null;
                 conversion.getResponse().setContentType(ContentType.HTML);
                 conversion.getResponse().setData("<html><h1>READY</h1></html>");
@@ -87,17 +88,32 @@ public class Mapillary {
         }
         if (Boolean.TRUE.equals(access)) {
             httpserver.shutdown();
-            RestClient rc = new RestClient(rootEndpoint + "/oauth/token", RestClient.REST_METHOD.POST);
-            rc.setMultipart(false);
-            rc.authKey(access_token);
-            rc.setParameter("client_id", ClientID);
-            rc.setParameter("client_secret", ClientSecret);
-            rc.setParameter("redirect_uri", RedirectUrl);
-            rc.setParameter("grant_type", "bearer");
-            rc.setParameter("code", access_token);
-            RestResponse rr = rc.toSingle(true);
-            System.out.println(rr.getDataAsString());
+            //provisionAccessToken();
         }
+
+    }
+
+    public void provisionAccessToken() {
+        RestClient rc = new RestClient(rootEndpoint + "/oauth/token", RestClient.REST_METHOD.POST);
+        rc.setMultipart(false);
+        rc.authKey(access_token);
+        rc.setParameter("client_id", ClientID);
+        //  rc.setParameter("client_secret", ClientSecret);
+        //  rc.setParameter("redirect_uri", RedirectUrl);
+        //  rc.setParameter("grant_type", "bearer");
+        //  rc.setParameter("code", access_token);
+        RestResponse rr = rc.toSingle(true);
+        System.out.println(rr.getDataAsString());
+    }
+
+    public void test() {
+        RestClient rc = new RestClient(rootEndpoint + "/sequences", RestClient.REST_METHOD.GET);
+        rc.authKey(access_token);
+        rc.setParameter("client_id", ClientID);
+        rc.setParameter("per_page", "2");
+        RestResponse rr = rc.toSingle(true);
+        SequenceCollection sc = rr.getResponse(SequenceCollection.class);
+        System.out.println(sc.getFeatures().size());
 
     }
 
@@ -157,6 +173,14 @@ public class Mapillary {
 
     public static void setClientSecret(String ClientSecret) {
         Mapillary.ClientSecret = ClientSecret;
+    }
+
+    public void setAccess_token(String access_token) {
+        this.access_token = access_token;
+    }
+
+    public String getAccess_token() {
+        return access_token;
     }
 
 }
