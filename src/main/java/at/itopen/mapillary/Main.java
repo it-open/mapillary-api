@@ -15,7 +15,10 @@ public class Main {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
+        Mapillary m = new Mapillary();
+        m.startOAuthServer(null);
+        m.startOAuth(Mapillary.SCOPE.USER_READ);
+        m.waitforAccess(50);
     }
 
 }
