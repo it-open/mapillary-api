@@ -74,10 +74,10 @@ public class Mapillary {
     }
 
     public void waitforAccess(int timeoutSeconds) {
-        timeoutSeconds = timeoutSeconds * 10;
+        timeoutSeconds = timeoutSeconds * 100;
         while (access == null) {
             try {
-                sleep(100);
+                sleep(10);
             } catch (InterruptedException ex) {
                 Logger.getLogger(Mapillary.class.getName()).log(Level.SEVERE, null, ex);
             }
