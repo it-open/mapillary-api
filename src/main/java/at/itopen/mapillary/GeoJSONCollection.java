@@ -16,6 +16,32 @@ public class GeoJSONCollection<T> {
     private String type;
     private List<GeoJSON<T>> features;
 
+    private String pageableFirst, pageableNext, pageablePrev;
+
+    public void setPageableFirst(String pageableFirst) {
+        this.pageableFirst = pageableFirst;
+    }
+
+    public void setPageableNext(String pageableNext) {
+        this.pageableNext = pageableNext;
+    }
+
+    public void setPageablePrev(String pageablePrev) {
+        this.pageablePrev = pageablePrev;
+    }
+
+    public String getPageableFirst() {
+        return pageableFirst;
+    }
+
+    public String getPageableNext() {
+        return pageableNext;
+    }
+
+    public String getPageablePrev() {
+        return pageablePrev;
+    }
+
     /**
      * @return the type
      */
