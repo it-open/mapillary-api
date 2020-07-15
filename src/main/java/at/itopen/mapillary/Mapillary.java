@@ -106,17 +106,26 @@ public class Mapillary {
         System.out.println(rr.getDataAsString());
     }
 
-    public void test() {
+    public SequenceCollection getSequences(SequenceFilter filter) {
         RestClient rc = new RestClient(rootEndpoint + "/sequences", RestClient.REST_METHOD.GET);
         rc.authKey(access_token);
         rc.setParameter("client_id", ClientID);
-        rc.setParameter("per_page", "2");
-        //rc.setParameter("_next_page_token", "W251bGwsMl0=");
+        filter.makeFilterParams(rc);
         RestResponse rr = rc.toSingle(true);
-        System.out.println(rr.getHeader("link")); //<https://a.mapillary.com/v3/sequences?per_page=2&client_id=UzZRbjZEUm1jNGFsNi1CS3g3RjNydzpmYjM2MDJiNDA1ZGE1MDYw>; rel="first", <https://a.mapillary.com/v3/sequences?_next_page_token=W251bGwsNF0%3D&per_page=2&client_id=UzZRbjZEUm1jNGFsNi1CS3g3RjNydzpmYjM2MDJiNDA1ZGE1MDYw>; rel="next"
         SequenceCollection sc = rr.getResponse(SequenceCollection.class);
-        System.out.println(sc.getFeatures().get(0).getProperties().getKey());
+        sc.parsePageable(rr.getHeader("link"), filter);
+        return sc;
+    }
 
+    public ImageCollection getImages(ImageFilter filter) {
+        RestClient rc = new RestClient(rootEndpoint + "/images", RestClient.REST_METHOD.GET);
+        rc.authKey(access_token);
+        rc.setParameter("client_id", ClientID);
+        filter.makeFilterParams(rc);
+        RestResponse rr = rc.toSingle(true);
+        ImageCollection ic = rr.getResponse(ImageCollection.class);
+        ic.parsePageable(rr.getHeader("link"), filter);
+        return ic;
     }
 
     public Boolean hasAccess() {

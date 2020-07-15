@@ -5,6 +5,7 @@
  */
 package at.itopen.mapillary;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -16,10 +17,62 @@ public class GeoJSONCollection<T> {
     private String type;
     private List<GeoJSON<T>> features;
 
-    private String pageableFirst, pageableNext, pageablePrev;
+    private String pageableNext, pageablePrev;
+    private Filter filter;
 
-    public void setPageableFirst(String pageableFirst) {
-        this.pageableFirst = pageableFirst;
+    protected void parsePageable(String linkline, Filter filter) {
+        this.filter = filter;
+        int pos = linkline.indexOf("_next_page_token=");
+        if (pos >= 0) {
+            pos = pos + "_next_page_token=".length();
+            int p1 = linkline.indexOf("&", pos);
+            int p2 = linkline.indexOf(">", pos);
+            if (p1 == -1) {
+                p1 = linkline.length();
+            }
+            if (p2 == -1) {
+                p1 = linkline.length();
+            }
+
+            int p = p1;
+
+            if (p2 < p1) {
+                p = p2;
+            }
+            pageableNext = linkline.substring(pos, p).replaceAll("%3D", "=");
+
+        }
+        pos = linkline.indexOf("_prev_page_token=");
+        if (pos >= 0) {
+            pos = pos + "_prev_page_token=".length();
+            int p1 = linkline.indexOf("&", pos);
+            int p2 = linkline.indexOf(">", pos);
+            if (p1 == -1) {
+                p1 = linkline.length();
+            }
+            if (p2 == -1) {
+                p1 = linkline.length();
+            }
+
+            int p = p1;
+            if (p2 < p1) {
+                p = p2;
+            }
+            pageablePrev = linkline.substring(pos, p).replaceAll("%3D", "=");
+
+        }
+    }
+
+    public List<T> asList() {
+        List<T> values = new ArrayList<>();
+        for (GeoJSON<T> val : features) {
+            values.add(val.getProperties());
+        }
+        return values;
+    }
+
+    public Filter getFilter() {
+        return filter;
     }
 
     public void setPageableNext(String pageableNext) {
@@ -30,8 +83,8 @@ public class GeoJSONCollection<T> {
         this.pageablePrev = pageablePrev;
     }
 
-    public String getPageableFirst() {
-        return pageableFirst;
+    public boolean isPageabe() {
+        return this.pageableNext != null;
     }
 
     public String getPageableNext() {
