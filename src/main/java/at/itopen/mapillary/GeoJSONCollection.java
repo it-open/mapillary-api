@@ -12,56 +12,10 @@ import java.util.List;
  *
  * @author roland
  */
-public class GeoJSONCollection<T> {
+public class GeoJSONCollection<T> extends PageableResult {
 
     private String type;
     private List<GeoJSON<T>> features;
-
-    private String pageableNext, pageablePrev;
-    private Filter filter;
-
-    protected void parsePageable(String linkline, Filter filter) {
-        this.filter = filter;
-        int pos = linkline.indexOf("_next_page_token=");
-        if (pos >= 0) {
-            pos = pos + "_next_page_token=".length();
-            int p1 = linkline.indexOf("&", pos);
-            int p2 = linkline.indexOf(">", pos);
-            if (p1 == -1) {
-                p1 = linkline.length();
-            }
-            if (p2 == -1) {
-                p1 = linkline.length();
-            }
-
-            int p = p1;
-
-            if (p2 < p1) {
-                p = p2;
-            }
-            pageableNext = linkline.substring(pos, p).replaceAll("%3D", "=");
-
-        }
-        pos = linkline.indexOf("_prev_page_token=");
-        if (pos >= 0) {
-            pos = pos + "_prev_page_token=".length();
-            int p1 = linkline.indexOf("&", pos);
-            int p2 = linkline.indexOf(">", pos);
-            if (p1 == -1) {
-                p1 = linkline.length();
-            }
-            if (p2 == -1) {
-                p1 = linkline.length();
-            }
-
-            int p = p1;
-            if (p2 < p1) {
-                p = p2;
-            }
-            pageablePrev = linkline.substring(pos, p).replaceAll("%3D", "=");
-
-        }
-    }
 
     public List<T> asList() {
         List<T> values = new ArrayList<>();
@@ -69,30 +23,6 @@ public class GeoJSONCollection<T> {
             values.add(val.getProperties());
         }
         return values;
-    }
-
-    public Filter getFilter() {
-        return filter;
-    }
-
-    public void setPageableNext(String pageableNext) {
-        this.pageableNext = pageableNext;
-    }
-
-    public void setPageablePrev(String pageablePrev) {
-        this.pageablePrev = pageablePrev;
-    }
-
-    public boolean isPageabe() {
-        return this.pageableNext != null;
-    }
-
-    public String getPageableNext() {
-        return pageableNext;
-    }
-
-    public String getPageablePrev() {
-        return pageablePrev;
     }
 
     /**

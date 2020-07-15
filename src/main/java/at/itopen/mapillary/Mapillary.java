@@ -5,6 +5,14 @@
  */
 package at.itopen.mapillary;
 
+import at.itopen.mapillary.user.UserCollection;
+import at.itopen.mapillary.user.User;
+import at.itopen.mapillary.user.UserFilter;
+import at.itopen.mapillary.image.ImageFilter;
+import at.itopen.mapillary.image.ImageCollection;
+import at.itopen.mapillary.sequence.SequenceFilter;
+import at.itopen.mapillary.sequence.SequenceCollection;
+import at.itopen.mapillary.user.UserStatistic;
 import at.itopen.simplerest.RestHttpServer;
 import at.itopen.simplerest.client.RestClient;
 import at.itopen.simplerest.client.RestResponse;
@@ -126,6 +134,34 @@ public class Mapillary {
         ImageCollection ic = rr.getResponse(ImageCollection.class);
         ic.parsePageable(rr.getHeader("link"), filter);
         return ic;
+    }
+
+    public UserCollection getUsers(UserFilter filter) {
+        RestClient rc = new RestClient(rootEndpoint + "/users", RestClient.REST_METHOD.GET);
+        rc.authKey(access_token);
+        rc.setParameter("client_id", ClientID);
+        filter.makeFilterParams(rc);
+        RestResponse rr = rc.toSingle(true);
+        UserCollection uc = rr.getResponse(UserCollection.class);
+        uc.parsePageable(rr.getHeader("link"), filter);
+        return uc;
+    }
+
+    public User getUser(String key) {
+        RestClient rc = new RestClient(rootEndpoint + "/users/" + key, RestClient.REST_METHOD.GET);
+        rc.authKey(access_token);
+        rc.setParameter("client_id", ClientID);
+        RestResponse rr = rc.toSingle(true);
+        return rr.getResponse(User.class);
+    }
+
+    public UserStatistic getUserStatistc(String key) {
+        RestClient rc = new RestClient(rootEndpoint + "/users/" + key + "/stats", RestClient.REST_METHOD.GET);
+        rc.authKey(access_token);
+        rc.setParameter("client_id", ClientID);
+        RestResponse rr = rc.toSingle(true);
+        return rr.getResponse(UserStatistic.class);
+
     }
 
     public Boolean hasAccess() {

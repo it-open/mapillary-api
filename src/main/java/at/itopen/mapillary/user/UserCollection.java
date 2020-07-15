@@ -3,18 +3,21 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package at.itopen.mapillary;
+package at.itopen.mapillary.user;
+
+import at.itopen.mapillary.Filter;
+import java.util.ArrayList;
 
 /**
  *
  * @author roland
  */
-public class PageableResult {
+public class UserCollection extends ArrayList<User> {
 
     private String pageableNext, pageablePrev;
     private Filter filter;
 
-    protected void parsePageable(String linkline, Filter filter) {
+    public void parsePageable(String linkline, Filter filter) {
         this.filter = filter;
         int pos = linkline.indexOf("_next_page_token=");
         if (pos >= 0) {

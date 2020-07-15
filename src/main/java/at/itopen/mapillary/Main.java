@@ -5,6 +5,10 @@
  */
 package at.itopen.mapillary;
 
+import at.itopen.mapillary.sequence.SequenceFilter;
+import at.itopen.mapillary.sequence.SequenceCollection;
+import at.itopen.mapillary.user.UserCollection;
+import at.itopen.mapillary.user.UserFilter;
 import java.text.ParseException;
 
 /**
@@ -26,6 +30,10 @@ public class Main {
         sf.setPerPage(2);
         SequenceCollection coll = m.getSequences(sf);
         System.out.println(coll.asList().get(0).getKey());
+        UserFilter userFilter = new UserFilter();
+        userFilter.addUserName("schu_r");
+        UserCollection uc = m.getUsers(userFilter);
+        System.out.println(uc.get(0).getAbout());
     }
 
 }
