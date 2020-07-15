@@ -10,9 +10,13 @@ It is Work in Progress.
 * Download Image Metadata
 * Users and Statistcs
 * Pagination (50%)
+* Create UploadSequence (New, What sequences are open, delete and publish)
+* Example Code
 
 ## What to Come ##
-Everything Else: Images (Download and Upload),Changeset, Map Features, Object Detection 
+* image Upload
+* Everything Else: Changeset, Map Features, Object Detection 
+* Documentation
 Just give me time to implement it or help.
 
 
