@@ -181,6 +181,14 @@ public class Mapillary {
         return rr.getResponse(User.class);
     }
 
+    public User getMe() {
+        RestClient rc = new RestClient(rootEndpoint + "/me", RestClient.REST_METHOD.GET);
+        rc.authKey(access_token);
+        rc.setParameter("client_id", ClientID);
+        RestResponse rr = rc.toSingle(true);
+        return rr.getResponse(User.class);
+    }
+
     public UserStatistic getUserStatistc(String key) {
         RestClient rc = new RestClient(rootEndpoint + "/users/" + key + "/stats", RestClient.REST_METHOD.GET);
         rc.authKey(access_token);
