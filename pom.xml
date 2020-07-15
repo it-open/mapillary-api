@@ -12,6 +12,11 @@
             <version>0.4.1</version>
             <classifier>jar-with-dependencies</classifier>
         </dependency>
+        <dependency>
+            <groupId>com.github.mjeanroy</groupId>
+            <artifactId>exiftool-lib</artifactId>
+            <version>2.6.0</version>
+        </dependency>
     </dependencies>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
