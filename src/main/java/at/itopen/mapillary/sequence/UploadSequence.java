@@ -25,6 +25,14 @@ public class UploadSequence {
         this.mapillary = mapillary;
     }
 
+    public void delete() {
+        mapillary.deleteUpload(key);
+    }
+
+    public void publish() {
+        mapillary.publishUpload(key);
+    }
+
     @JsonSerialize(using = Json8601Serializer.class)
     @JsonDeserialize(using = Json8601Deserializer.class)
     private Date created_at;
