@@ -7,6 +7,9 @@ package at.itopen.mapillary.sequence;
 
 import at.itopen.mapillary.ISO8601.Json8601Deserializer;
 import at.itopen.mapillary.ISO8601.Json8601Serializer;
+import at.itopen.mapillary.Mapillary;
+import at.itopen.mapillary.image.ImageCollection;
+import at.itopen.mapillary.image.ImageFilter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import java.util.Date;
@@ -174,6 +177,14 @@ public class Sequence {
      */
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public ImageCollection fetchImages(Mapillary mapillary, ImageFilter filter) {
+        if (filter == null) {
+            filter = new ImageFilter();
+        }
+        filter.addSequence(this);
+        return mapillary.getImages(filter);
     }
 
 }

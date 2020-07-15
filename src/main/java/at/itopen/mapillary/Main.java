@@ -9,7 +9,13 @@ import at.itopen.mapillary.sequence.SequenceFilter;
 import at.itopen.mapillary.sequence.SequenceCollection;
 import at.itopen.mapillary.user.UserCollection;
 import at.itopen.mapillary.user.UserFilter;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.text.ParseException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.imageio.ImageIO;
 
 /**
  *
@@ -34,6 +40,13 @@ public class Main {
         userFilter.addUserName("schu_r");
         UserCollection uc = m.getUsers(userFilter);
         System.out.println(uc.get(0).getAbout());
+        BufferedImage image = uc.get(0).fetchAvatar();
+        try {
+            ImageIO.write(image, "PNG", new File("roland.png"));
+        } catch (IOException ex) {
+            System.out.println(ex.getMessage());
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
 }

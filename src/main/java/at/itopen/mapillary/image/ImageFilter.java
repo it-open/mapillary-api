@@ -7,6 +7,7 @@ package at.itopen.mapillary.image;
 
 import at.itopen.mapillary.Filter;
 import at.itopen.mapillary.sequence.Sequence;
+import at.itopen.mapillary.user.User;
 import at.itopen.simplerest.client.RestClient;
 import java.util.ArrayList;
 import java.util.Date;
@@ -40,6 +41,10 @@ public class ImageFilter extends Filter {
 
     public void addUserKey(String key) {
         users.add(key);
+    }
+
+    public void addUser(User user) {
+        addUserKey(user.getKey());
     }
 
     public void addUserName(String name) {

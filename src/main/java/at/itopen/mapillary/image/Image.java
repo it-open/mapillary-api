@@ -7,8 +7,10 @@ package at.itopen.mapillary.image;
 
 import at.itopen.mapillary.ISO8601.Json8601Deserializer;
 import at.itopen.mapillary.ISO8601.Json8601Serializer;
+import at.itopen.mapillary.Mapillary;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import java.awt.image.BufferedImage;
 import java.util.Date;
 
 /**
@@ -185,6 +187,10 @@ public class Image {
      */
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public BufferedImage fetchImage(Mapillary mapillary, Mapillary.IMAGE_FETCH_SIZE fetchSize) {
+        return mapillary.getImage(this, fetchSize);
     }
 
 }

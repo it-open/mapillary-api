@@ -7,9 +7,20 @@ package at.itopen.mapillary.user;
 
 import at.itopen.mapillary.ISO8601.Json8601Deserializer;
 import at.itopen.mapillary.ISO8601.Json8601Serializer;
+import at.itopen.mapillary.Mapillary;
+import at.itopen.mapillary.image.ImageCollection;
+import at.itopen.mapillary.image.ImageFilter;
+import at.itopen.mapillary.sequence.SequenceCollection;
+import at.itopen.mapillary.sequence.SequenceFilter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.net.URL;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.imageio.ImageIO;
 
 /**
  *
@@ -34,24 +45,22 @@ public class User {
     }
 
     /**
-     * @param about the about to set
-     */
-    public void setAbout(String about) {
-        this.about = about;
-    }
-
-    /**
      * @return the avatar
      */
     public String getAvatar() {
         return avatar;
     }
 
-    /**
-     * @param avatar the avatar to set
-     */
-    public void setAvatar(String avatar) {
-        this.avatar = avatar;
+    public BufferedImage fetchAvatar() {
+        try {
+
+            URL url = new URL(getAvatar());
+            return ImageIO.read(url);
+        } catch (IOException ex) {
+            Logger.getLogger(Mapillary.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+
     }
 
     /**
@@ -62,24 +71,10 @@ public class User {
     }
 
     /**
-     * @param created_at the created_at to set
-     */
-    public void setCreated_at(Date created_at) {
-        this.created_at = created_at;
-    }
-
-    /**
      * @return the key
      */
     public String getKey() {
         return key;
-    }
-
-    /**
-     * @param key the key to set
-     */
-    public void setKey(String key) {
-        this.key = key;
     }
 
     /**
@@ -89,11 +84,20 @@ public class User {
         return username;
     }
 
-    /**
-     * @param username the username to set
-     */
-    public void setUsername(String username) {
-        this.username = username;
+    public SequenceCollection fetchSequences(Mapillary mapillary, SequenceFilter filter) {
+        if (filter == null) {
+            filter = new SequenceFilter();
+        }
+        filter.addUser(this);
+        return mapillary.getSequences(filter);
+    }
+
+    public ImageCollection fetchImages(Mapillary mapillary, ImageFilter filter) {
+        if (filter == null) {
+            filter = new ImageFilter();
+        }
+        filter.addUser(this);
+        return mapillary.getImages(filter);
     }
 
 }

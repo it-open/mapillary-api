@@ -5,6 +5,7 @@
  */
 package at.itopen.mapillary;
 
+import at.itopen.mapillary.image.Image;
 import at.itopen.mapillary.user.UserCollection;
 import at.itopen.mapillary.user.User;
 import at.itopen.mapillary.user.UserFilter;
@@ -20,13 +21,16 @@ import at.itopen.simplerest.conversion.ContentType;
 import at.itopen.simplerest.conversion.Conversion;
 import at.itopen.simplerest.endpoints.GetEndpoint;
 import java.awt.Desktop;
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 import static java.lang.Thread.sleep;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.net.URL;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.imageio.ImageIO;
 
 /**
  *
@@ -36,8 +40,8 @@ public class Mapillary {
 
     private static String rootEndpoint = "https://a.mapillary.com/v3";
     private static String ClientID = "UzZRbjZEUm1jNGFsNi1CS3g3RjNydzpmYjM2MDJiNDA1ZGE1MDYw";
-    private static String ClientSecret = "ZGE5MTMyOGZjODQzNjM1ZDdhMTVjMDEwYzJjNjIyYWQ=";
     private static String RedirectUrl = "http://localhost:9876/token";
+    private final static String IMAGE_FETCH_URL = "https://images.mapillary.com/{key}/thumb-{size}.jpg";
 
     private RestHttpServer httpserver;
     private String access_token = null;
@@ -147,6 +151,28 @@ public class Mapillary {
         return uc;
     }
 
+    public enum IMAGE_FETCH_SIZE {
+        i320, i640, i1024, i2048
+    };
+
+    public BufferedImage getImage(Image image, IMAGE_FETCH_SIZE fetchSize) {
+        return getImage(image.getKey(), fetchSize);
+    }
+
+    public BufferedImage getImage(String imageKey, IMAGE_FETCH_SIZE fetchSize) {
+        try {
+            String surl = IMAGE_FETCH_URL;
+            surl = surl.replace("{key}", imageKey);
+            surl = surl.replace("{size}", fetchSize.name().substring(1));
+
+            URL url = new URL(surl);
+            return ImageIO.read(url);
+        } catch (IOException ex) {
+            Logger.getLogger(Mapillary.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+
     public User getUser(String key) {
         RestClient rc = new RestClient(rootEndpoint + "/users/" + key, RestClient.REST_METHOD.GET);
         rc.authKey(access_token);
@@ -212,14 +238,6 @@ public class Mapillary {
 
     public static String getRedirectUrl() {
         return RedirectUrl;
-    }
-
-    public static String getClientSecret() {
-        return ClientSecret;
-    }
-
-    public static void setClientSecret(String ClientSecret) {
-        Mapillary.ClientSecret = ClientSecret;
     }
 
     public void setAccess_token(String access_token) {
