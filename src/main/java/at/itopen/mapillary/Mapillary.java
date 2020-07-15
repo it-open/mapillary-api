@@ -6,24 +6,26 @@
 package at.itopen.mapillary;
 
 import at.itopen.mapillary.image.Image;
-import at.itopen.mapillary.user.UserCollection;
-import at.itopen.mapillary.user.User;
-import at.itopen.mapillary.user.UserFilter;
-import at.itopen.mapillary.image.ImageFilter;
 import at.itopen.mapillary.image.ImageCollection;
+import at.itopen.mapillary.image.ImageFilter;
 import at.itopen.mapillary.sequence.SequenceFilter;
 import at.itopen.mapillary.sequence.SequenceCollection;
 import at.itopen.mapillary.sequence.UploadSequence;
 import at.itopen.mapillary.sequence.UploadSequenceCollection;
+import at.itopen.mapillary.user.User;
+import at.itopen.mapillary.user.UserCollection;
+import at.itopen.mapillary.user.UserFilter;
 import at.itopen.mapillary.user.UserStatistic;
 import at.itopen.simplerest.RestHttpServer;
 import at.itopen.simplerest.client.RestClient;
+import at.itopen.simplerest.client.RestFile;
 import at.itopen.simplerest.client.RestResponse;
 import at.itopen.simplerest.conversion.ContentType;
 import at.itopen.simplerest.conversion.Conversion;
 import at.itopen.simplerest.endpoints.GetEndpoint;
 import java.awt.Desktop;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 import static java.lang.Thread.sleep;
 import java.net.URI;
@@ -170,6 +172,22 @@ public class Mapillary {
 
     /**
      *
+     * @param file
+     * @param uploadSequence
+     */
+    public void uploadImage(File file, UploadSequence uploadSequence) {
+        RestClient rc = new RestClient(uploadSequence.getUrl(), RestClient.REST_METHOD.POST);
+        for (Map.Entry<String, String> e : uploadSequence.getFields().entrySet()) {
+            rc.setParameter(e.getKey(), e.getValue());
+        }
+        rc.setParameter("key", uploadSequence.getKey_prefix() + file.getName());
+        rc.addFile(file.getName(), new RestFile(file, org.apache.http.entity.ContentType.IMAGE_JPEG, file.getName()));
+        rc.toSingle(true);
+
+    }
+
+    /**
+     *
      * @param key
      * @return
      */
@@ -178,7 +196,9 @@ public class Mapillary {
         rc.authKey(access_token);
         rc.setParameter("client_id", ClientID);
         RestResponse rr = rc.toSingle(true);
-        return rr.getResponse(UploadSequence.class);
+
+        return rr.getResponse(UploadSequence.class
+        );
     }
 
     /**
@@ -212,7 +232,9 @@ public class Mapillary {
         rc.authKey(access_token);
         rc.setParameter("client_id", ClientID);
         RestResponse rr = rc.toSingle(true);
-        return rr.getResponse(UploadSequenceCollection.class);
+
+        return rr.getResponse(UploadSequenceCollection.class
+        );
     }
 
     /**
@@ -226,7 +248,8 @@ public class Mapillary {
         rc.setParameter("client_id", ClientID);
         filter.makeFilterParams(rc);
         RestResponse rr = rc.toSingle(true);
-        ImageCollection ic = rr.getResponse(ImageCollection.class);
+        ImageCollection ic = rr.getResponse(ImageCollection.class
+        );
         ic.parsePageable(rr.getHeader("link"), filter);
         return ic;
     }
@@ -242,7 +265,8 @@ public class Mapillary {
         rc.setParameter("client_id", ClientID);
         filter.makeFilterParams(rc);
         RestResponse rr = rc.toSingle(true);
-        UserCollection uc = rr.getResponse(UserCollection.class);
+        UserCollection uc = rr.getResponse(UserCollection.class
+        );
         uc.parsePageable(rr.getHeader("link"), filter);
         return uc;
     }
@@ -294,8 +318,10 @@ public class Mapillary {
 
             URL url = new URL(surl);
             return ImageIO.read(url);
+
         } catch (IOException ex) {
-            Logger.getLogger(Mapillary.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Mapillary.class
+                    .getName()).log(Level.SEVERE, null, ex);
         }
         return null;
     }
@@ -310,7 +336,9 @@ public class Mapillary {
         rc.authKey(access_token);
         rc.setParameter("client_id", ClientID);
         RestResponse rr = rc.toSingle(true);
-        return rr.getResponse(User.class);
+
+        return rr.getResponse(User.class
+        );
     }
 
     /**
@@ -322,7 +350,9 @@ public class Mapillary {
         rc.authKey(access_token);
         rc.setParameter("client_id", ClientID);
         RestResponse rr = rc.toSingle(true);
-        return rr.getResponse(User.class);
+
+        return rr.getResponse(User.class
+        );
     }
 
     /**
@@ -335,7 +365,9 @@ public class Mapillary {
         rc.authKey(access_token);
         rc.setParameter("client_id", ClientID);
         RestResponse rr = rc.toSingle(true);
-        return rr.getResponse(UserStatistic.class);
+
+        return rr.getResponse(UserStatistic.class
+        );
 
     }
 
@@ -345,6 +377,7 @@ public class Mapillary {
      */
     public Boolean hasAccess() {
         return access;
+
     }
 
     /**
@@ -414,8 +447,10 @@ public class Mapillary {
         url.append("&scope=").append(scope.toString());
         try {
             Desktop.getDesktop().browse(new URI(url.toString()));
+
         } catch (URISyntaxException | IOException ex) {
-            Logger.getLogger(Mapillary.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Mapillary.class
+                    .getName()).log(Level.SEVERE, null, ex);
         }
 
     }

@@ -49,7 +49,7 @@ public class UploadSequence {
     private Map<String, String> fields;
     private String client;
     private String key;
-    private String ley_prefix;
+    private String key_prefix;
     @JsonSerialize(using = Json8601Serializer.class)
     @JsonDeserialize(using = Json8601Deserializer.class)
     private Date signed_at;
@@ -86,10 +86,10 @@ public class UploadSequence {
     }
 
     /**
-     * @return the ley_prefix
+     * @return the key_prefix
      */
-    public String getLey_prefix() {
-        return ley_prefix;
+    public String getKey_prefix() {
+        return key_prefix;
     }
 
     /**
