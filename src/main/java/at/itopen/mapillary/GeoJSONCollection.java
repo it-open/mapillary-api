@@ -11,12 +11,17 @@ import java.util.List;
 /**
  *
  * @author roland
+ * @param <T>
  */
 public class GeoJSONCollection<T> extends PageableResult {
 
     private String type;
     private List<GeoJSON<T>> features;
 
+    /**
+     *
+     * @return
+     */
     public List<T> asList() {
         List<T> values = new ArrayList<>();
         for (GeoJSON<T> val : features) {

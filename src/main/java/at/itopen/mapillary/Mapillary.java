@@ -50,10 +50,17 @@ public class Mapillary {
     private String access_token = null;
     private Boolean access = null;
 
+    /**
+     *
+     */
     public Mapillary() {
 
     }
 
+    /**
+     *
+     * @param port
+     */
     public void startOAuthServer(Integer port) {
         if (httpserver != null) {
             return;
@@ -88,6 +95,10 @@ public class Mapillary {
 
     }
 
+    /**
+     *
+     * @param timeoutSeconds
+     */
     public void waitforAccess(int timeoutSeconds) {
         timeoutSeconds = timeoutSeconds * 100;
         while (access == null) {
@@ -108,6 +119,9 @@ public class Mapillary {
 
     }
 
+    /**
+     *
+     */
     public void provisionAccessToken() {
         RestClient rc = new RestClient(rootEndpoint + "/oauth/token", RestClient.REST_METHOD.POST);
         rc.setMultipart(false);
@@ -121,6 +135,11 @@ public class Mapillary {
         System.out.println(rr.getDataAsString());
     }
 
+    /**
+     *
+     * @param filter
+     * @return
+     */
     public SequenceCollection getSequences(SequenceFilter filter) {
         RestClient rc = new RestClient(rootEndpoint + "/sequences", RestClient.REST_METHOD.GET);
         rc.authKey(access_token);
@@ -132,6 +151,10 @@ public class Mapillary {
         return sc;
     }
 
+    /**
+     *
+     * @return
+     */
     public UploadSequence startUpload() {
         RestClient rc = new RestClient(rootEndpoint + "/me/uploads?client_id=" + ClientID, RestClient.REST_METHOD.POST);
         rc.authKey(access_token);
@@ -145,6 +168,11 @@ public class Mapillary {
         return rr.getResponse(UploadSequence.class);
     }
 
+    /**
+     *
+     * @param key
+     * @return
+     */
     public UploadSequence getUpload(String key) {
         RestClient rc = new RestClient(rootEndpoint + "/me/uploads/" + key, RestClient.REST_METHOD.GET);
         rc.authKey(access_token);
@@ -153,6 +181,10 @@ public class Mapillary {
         return rr.getResponse(UploadSequence.class);
     }
 
+    /**
+     *
+     * @param key
+     */
     public void publishUpload(String key) {
         RestClient rc = new RestClient(rootEndpoint + "/me/uploads/" + key + "/closed", RestClient.REST_METHOD.PUT);
         rc.authKey(access_token);
@@ -160,6 +192,10 @@ public class Mapillary {
         rc.toSingle(true);
     }
 
+    /**
+     *
+     * @param key
+     */
     public void deleteUpload(String key) {
         RestClient rc = new RestClient(rootEndpoint + "/me/uploads/" + key, RestClient.REST_METHOD.DELETE);
         rc.authKey(access_token);
@@ -167,6 +203,10 @@ public class Mapillary {
         rc.toSingle(true);
     }
 
+    /**
+     *
+     * @return
+     */
     public UploadSequenceCollection getOpenUpload() {
         RestClient rc = new RestClient(rootEndpoint + "/me/uploads/", RestClient.REST_METHOD.GET);
         rc.authKey(access_token);
@@ -175,6 +215,11 @@ public class Mapillary {
         return rr.getResponse(UploadSequenceCollection.class);
     }
 
+    /**
+     *
+     * @param filter
+     * @return
+     */
     public ImageCollection getImages(ImageFilter filter) {
         RestClient rc = new RestClient(rootEndpoint + "/images", RestClient.REST_METHOD.GET);
         rc.authKey(access_token);
@@ -186,6 +231,11 @@ public class Mapillary {
         return ic;
     }
 
+    /**
+     *
+     * @param filter
+     * @return
+     */
     public UserCollection getUsers(UserFilter filter) {
         RestClient rc = new RestClient(rootEndpoint + "/users", RestClient.REST_METHOD.GET);
         rc.authKey(access_token);
@@ -197,14 +247,45 @@ public class Mapillary {
         return uc;
     }
 
+    /**
+     *
+     */
     public enum IMAGE_FETCH_SIZE {
-        i320, i640, i1024, i2048
+
+        /**
+         *
+         */
+        i320,
+        /**
+         *
+         */
+        i640,
+        /**
+         *
+         */
+        i1024,
+        /**
+         *
+         */
+        i2048
     };
 
+    /**
+     *
+     * @param image
+     * @param fetchSize
+     * @return
+     */
     public BufferedImage getImage(Image image, IMAGE_FETCH_SIZE fetchSize) {
         return getImage(image.getKey(), fetchSize);
     }
 
+    /**
+     *
+     * @param imageKey
+     * @param fetchSize
+     * @return
+     */
     public BufferedImage getImage(String imageKey, IMAGE_FETCH_SIZE fetchSize) {
         try {
             String surl = IMAGE_FETCH_URL;
@@ -219,6 +300,11 @@ public class Mapillary {
         return null;
     }
 
+    /**
+     *
+     * @param key
+     * @return
+     */
     public User getUser(String key) {
         RestClient rc = new RestClient(rootEndpoint + "/users/" + key, RestClient.REST_METHOD.GET);
         rc.authKey(access_token);
@@ -227,6 +313,10 @@ public class Mapillary {
         return rr.getResponse(User.class);
     }
 
+    /**
+     *
+     * @return
+     */
     public User getMe() {
         RestClient rc = new RestClient(rootEndpoint + "/me", RestClient.REST_METHOD.GET);
         rc.authKey(access_token);
@@ -235,6 +325,11 @@ public class Mapillary {
         return rr.getResponse(User.class);
     }
 
+    /**
+     *
+     * @param key
+     * @return
+     */
     public UserStatistic getUserStatistc(String key) {
         RestClient rc = new RestClient(rootEndpoint + "/users/" + key + "/stats", RestClient.REST_METHOD.GET);
         rc.authKey(access_token);
@@ -244,14 +339,61 @@ public class Mapillary {
 
     }
 
+    /**
+     *
+     * @return
+     */
     public Boolean hasAccess() {
         return access;
     }
 
+    /**
+     *
+     */
     public static enum SCOPE {
-        USER_READ, USER_WRITE, USER_EMAIL, PUBLIC_WRITE, PUBLIC_UPLOAD, PRIVATE_READ, PRIVATE_WRITE, PRIVATE_UPLOAD, MAPILLARY_USER
+
+        /**
+         *
+         */
+        USER_READ,
+        /**
+         *
+         */
+        USER_WRITE,
+        /**
+         *
+         */
+        USER_EMAIL,
+        /**
+         *
+         */
+        PUBLIC_WRITE,
+        /**
+         *
+         */
+        PUBLIC_UPLOAD,
+        /**
+         *
+         */
+        PRIVATE_READ,
+        /**
+         *
+         */
+        PRIVATE_WRITE,
+        /**
+         *
+         */
+        PRIVATE_UPLOAD,
+        /**
+         *
+         */
+        MAPILLARY_USER
     };
 
+    /**
+     *
+     * @param scopes
+     */
     public void startOAuth(SCOPE... scopes) {
 
         StringBuilder url = new StringBuilder();
@@ -278,26 +420,50 @@ public class Mapillary {
 
     }
 
+    /**
+     *
+     * @param ClientID
+     */
     public static void setClientID(String ClientID) {
         Mapillary.ClientID = ClientID;
     }
 
+    /**
+     *
+     * @return
+     */
     public static String getClientID() {
         return ClientID;
     }
 
+    /**
+     *
+     * @param RedirectUrl
+     */
     public static void setRedirectUrl(String RedirectUrl) {
         Mapillary.RedirectUrl = RedirectUrl;
     }
 
+    /**
+     *
+     * @return
+     */
     public static String getRedirectUrl() {
         return RedirectUrl;
     }
 
+    /**
+     *
+     * @param access_token
+     */
     public void setAccess_token(String access_token) {
         this.access_token = access_token;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getAccess_token() {
         return access_token;
     }

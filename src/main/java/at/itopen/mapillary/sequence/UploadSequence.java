@@ -21,14 +21,24 @@ public class UploadSequence {
 
     private Mapillary mapillary;
 
+    /**
+     *
+     * @param mapillary
+     */
     public void setMapillary(Mapillary mapillary) {
         this.mapillary = mapillary;
     }
 
+    /**
+     *
+     */
     public void delete() {
         mapillary.deleteUpload(key);
     }
 
+    /**
+     *
+     */
     public void publish() {
         mapillary.publishUpload(key);
     }

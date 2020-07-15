@@ -29,22 +29,45 @@ public class SequenceFilter extends Filter {
     List<String> users = new ArrayList<>();
     List<String> username = new ArrayList<>();
 
+    /**
+     *
+     * @param key
+     */
     public void addOrgranizationKey(String key) {
         organizations.add(key);
     }
 
+    /**
+     *
+     * @param key
+     */
     public void addUserKey(String key) {
         users.add(key);
     }
 
+    /**
+     *
+     * @param user
+     */
     public void addUser(User user) {
         addUserKey(user.getKey());
     }
 
+    /**
+     *
+     * @param name
+     */
     public void addUserName(String name) {
         username.add(name);
     }
 
+    /**
+     *
+     * @param latMin
+     * @param latMax
+     * @param lonMin
+     * @param lonMax
+     */
     public void setBBox(double latMin, double latMax, double lonMin, double lonMax) {
         bbox_xmin = latMin;
         bbox_xmax = latMax;
@@ -52,30 +75,58 @@ public class SequenceFilter extends Filter {
         bbox_ymax = lonMax;
     }
 
+    /**
+     *
+     * @param endTime
+     */
     public void setEndTime(Date endTime) {
         this.endTime = endTime;
     }
 
+    /**
+     *
+     * @param startTime
+     */
     public void setStartTime(Date startTime) {
         this.startTime = startTime;
     }
 
+    /**
+     *
+     * @param perPage
+     */
     public void setPerPage(long perPage) {
         this.perPage = perPage;
     }
 
+    /**
+     *
+     * @param priv
+     */
     public void setPrivate(Boolean priv) {
         this.priv = priv;
     }
 
+    /**
+     *
+     * @param starred
+     */
     public void setStarred(Boolean starred) {
         this.starred = starred;
     }
 
+    /**
+     *
+     * @param title
+     */
     public void setTitle(String title) {
         this.title = title;
     }
 
+    /**
+     *
+     * @param client
+     */
     @Override
     public void makeFilterParams(RestClient client) {
         if (bbox_xmin != null) {

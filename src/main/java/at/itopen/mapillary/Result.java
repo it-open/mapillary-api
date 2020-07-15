@@ -16,6 +16,10 @@ public class Result {
     private String errorInvalidParameter;
     private String errorMissingKey;
 
+    /**
+     *
+     * @return
+     */
     public boolean isError() {
         return statusCode >= 400;
     }

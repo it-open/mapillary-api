@@ -51,6 +51,10 @@ public class User {
         return avatar;
     }
 
+    /**
+     *
+     * @return
+     */
     public BufferedImage fetchAvatar() {
         try {
 
@@ -84,6 +88,12 @@ public class User {
         return username;
     }
 
+    /**
+     *
+     * @param mapillary
+     * @param filter
+     * @return
+     */
     public SequenceCollection fetchSequences(Mapillary mapillary, SequenceFilter filter) {
         if (filter == null) {
             filter = new SequenceFilter();
@@ -92,6 +102,12 @@ public class User {
         return mapillary.getSequences(filter);
     }
 
+    /**
+     *
+     * @param mapillary
+     * @param filter
+     * @return
+     */
     public ImageCollection fetchImages(Mapillary mapillary, ImageFilter filter) {
         if (filter == null) {
             filter = new ImageFilter();

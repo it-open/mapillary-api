@@ -19,6 +19,9 @@ public class ISO8601 {
 
     /**
      * Transform Calendar to ISO 8601 string.
+     *
+     * @param date
+     * @return
      */
     public static String fromDate(final Date date) {
         String formatted = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSZ")
@@ -28,6 +31,8 @@ public class ISO8601 {
 
     /**
      * Get current date and time formatted as ISO 8601 string.
+     *
+     * @return
      */
     public static String now() {
         return fromDate(new Date());
@@ -35,6 +40,10 @@ public class ISO8601 {
 
     /**
      * Transform ISO 8601 string to Calendar.
+     *
+     * @param iso8601string
+     * @return
+     * @throws java.text.ParseException
      */
     public static Date toDate(final String iso8601string)
             throws ParseException {

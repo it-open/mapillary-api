@@ -14,6 +14,11 @@ public class PageableResult {
     private String pageableNext, pageablePrev;
     private Filter filter;
 
+    /**
+     *
+     * @param linkline
+     * @param filter
+     */
     protected void parsePageable(String linkline, Filter filter) {
         this.filter = filter;
         int pos = linkline.indexOf("_next_page_token=");
@@ -57,26 +62,50 @@ public class PageableResult {
         }
     }
 
+    /**
+     *
+     * @return
+     */
     public Filter getFilter() {
         return filter;
     }
 
+    /**
+     *
+     * @param pageableNext
+     */
     public void setPageableNext(String pageableNext) {
         this.pageableNext = pageableNext;
     }
 
+    /**
+     *
+     * @param pageablePrev
+     */
     public void setPageablePrev(String pageablePrev) {
         this.pageablePrev = pageablePrev;
     }
 
+    /**
+     *
+     * @return
+     */
     public boolean isPageabe() {
         return this.pageableNext != null;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getPageableNext() {
         return pageableNext;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getPageablePrev() {
         return pageablePrev;
     }

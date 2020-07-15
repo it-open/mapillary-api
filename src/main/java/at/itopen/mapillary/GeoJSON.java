@@ -8,6 +8,7 @@ package at.itopen.mapillary;
 /**
  *
  * @author roland
+ * @param <T>
  */
 public class GeoJSON<T> {
 
@@ -15,6 +16,9 @@ public class GeoJSON<T> {
     private GeoJSONGeometry geometry;
     private T properties;
 
+    /**
+     *
+     */
     public GeoJSON() {
         geometry = new GeoJSONGeometry();
     }

@@ -16,8 +16,17 @@ import java.util.List;
  */
 public abstract class Filter {
 
+    /**
+     *
+     * @param client
+     */
     public abstract void makeFilterParams(RestClient client);
 
+    /**
+     *
+     * @param date
+     * @return
+     */
     protected String cDate(Date date) {
         if (date == null) {
             return null;
@@ -25,6 +34,11 @@ public abstract class Filter {
         return ISO8601.fromDate(date);
     }
 
+    /**
+     *
+     * @param value
+     * @return
+     */
     protected String cNumber(Number value) {
         if (value == null) {
             return null;
@@ -32,6 +46,11 @@ public abstract class Filter {
         return value.toString().replace(',', '.');
     }
 
+    /**
+     *
+     * @param value
+     * @return
+     */
     protected String cBool(Boolean value) {
         if (Boolean.TRUE.equals(value)) {
             return "true";
@@ -39,6 +58,11 @@ public abstract class Filter {
         return "false";
     }
 
+    /**
+     *
+     * @param value
+     * @return
+     */
     protected String cList(List<String> value) {
         StringBuilder sb = new StringBuilder();
         for (String v : value) {

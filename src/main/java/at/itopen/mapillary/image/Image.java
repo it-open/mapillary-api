@@ -189,6 +189,12 @@ public class Image {
         this.username = username;
     }
 
+    /**
+     *
+     * @param mapillary
+     * @param fetchSize
+     * @return
+     */
     public BufferedImage fetchImage(Mapillary mapillary, Mapillary.IMAGE_FETCH_SIZE fetchSize) {
         return mapillary.getImage(this, fetchSize);
     }

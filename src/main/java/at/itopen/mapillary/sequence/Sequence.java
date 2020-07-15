@@ -179,6 +179,12 @@ public class Sequence {
         this.username = username;
     }
 
+    /**
+     *
+     * @param mapillary
+     * @param filter
+     * @return
+     */
     public ImageCollection fetchImages(Mapillary mapillary, ImageFilter filter) {
         if (filter == null) {
             filter = new ImageFilter();

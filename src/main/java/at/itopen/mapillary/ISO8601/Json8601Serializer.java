@@ -17,6 +17,13 @@ import java.util.Date;
  */
 public class Json8601Serializer extends JsonSerializer<Date> {
 
+    /**
+     *
+     * @param arg0
+     * @param arg1
+     * @param arg2
+     * @throws IOException
+     */
     @Override
     public void serialize(Date arg0, JsonGenerator arg1, SerializerProvider arg2) throws IOException {
         arg1.writeString(ISO8601.fromDate(arg0));

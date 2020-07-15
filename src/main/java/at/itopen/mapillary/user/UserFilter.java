@@ -21,14 +21,29 @@ public class UserFilter extends Filter {
     List<String> users = new ArrayList<>();
     List<String> username = new ArrayList<>();
 
+    /**
+     *
+     * @param key
+     */
     public void addUserKey(String key) {
         users.add(key);
     }
 
+    /**
+     *
+     * @param name
+     */
     public void addUserName(String name) {
         username.add(name);
     }
 
+    /**
+     *
+     * @param latMin
+     * @param latMax
+     * @param lonMin
+     * @param lonMax
+     */
     public void setBBox(double latMin, double latMax, double lonMin, double lonMax) {
         bbox_xmin = latMin;
         bbox_xmax = latMax;
@@ -36,10 +51,18 @@ public class UserFilter extends Filter {
         bbox_ymax = lonMax;
     }
 
+    /**
+     *
+     * @param perPage
+     */
     public void setPerPage(long perPage) {
         this.perPage = perPage;
     }
 
+    /**
+     *
+     * @param client
+     */
     @Override
     public void makeFilterParams(RestClient client) {
         if (bbox_xmin != null) {

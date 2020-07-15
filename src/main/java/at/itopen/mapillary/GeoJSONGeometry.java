@@ -17,6 +17,9 @@ public class GeoJSONGeometry {
     private String type;
     private List<List<Double>> coordinates;
 
+    /**
+     *
+     */
     public GeoJSONGeometry() {
         coordinates = new ArrayList<>();
     }

@@ -16,6 +16,11 @@ import java.util.HashMap;
  */
 public class MapillaryObject extends HashMap<String, String> {
 
+    /**
+     *
+     * @param key
+     * @param value
+     */
     public void setBoolean(String key, Boolean value) {
         this.remove(key);
         if (value != null) {
@@ -23,6 +28,11 @@ public class MapillaryObject extends HashMap<String, String> {
         }
     }
 
+    /**
+     *
+     * @param key
+     * @param value
+     */
     public void setString(String key, String value) {
         this.remove(key);
         if (value != null) {
@@ -30,6 +40,11 @@ public class MapillaryObject extends HashMap<String, String> {
         }
     }
 
+    /**
+     *
+     * @param key
+     * @param value
+     */
     public void setLong(String key, Long value) {
         this.remove(key);
         if (value != null) {
@@ -37,6 +52,11 @@ public class MapillaryObject extends HashMap<String, String> {
         }
     }
 
+    /**
+     *
+     * @param key
+     * @param value
+     */
     public void setDouble(String key, Double value) {
         this.remove(key);
         if (value != null) {
@@ -44,6 +64,11 @@ public class MapillaryObject extends HashMap<String, String> {
         }
     }
 
+    /**
+     *
+     * @param key
+     * @param value
+     */
     public void setDate(String key, Date value) {
         this.remove(key);
         if (value != null) {
@@ -51,6 +76,11 @@ public class MapillaryObject extends HashMap<String, String> {
         }
     }
 
+    /**
+     *
+     * @param key
+     * @return
+     */
     public Boolean getBoolean(String key) {
         if (containsKey(key)) {
             String value = get(key).toLowerCase();
@@ -75,6 +105,11 @@ public class MapillaryObject extends HashMap<String, String> {
         }
     }
 
+    /**
+     *
+     * @param key
+     * @return
+     */
     public Long getLong(String key) {
         if (containsKey(key)) {
             String value = get(key);
@@ -88,6 +123,11 @@ public class MapillaryObject extends HashMap<String, String> {
         }
     }
 
+    /**
+     *
+     * @param key
+     * @return
+     */
     public Double getDouble(String key) {
         if (containsKey(key)) {
             String value = get(key);
@@ -101,6 +141,11 @@ public class MapillaryObject extends HashMap<String, String> {
         }
     }
 
+    /**
+     *
+     * @param key
+     * @return
+     */
     public Date getDate(String key) {
         if (containsKey(key)) {
             String value = get(key);
@@ -114,6 +159,11 @@ public class MapillaryObject extends HashMap<String, String> {
         }
     }
 
+    /**
+     *
+     * @param key
+     * @return
+     */
     public String getString(String key) {
         if (containsKey(key)) {
             return get(key);
