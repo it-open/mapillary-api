@@ -8,6 +8,7 @@ package at.itopen.mapillary.sequence;
 import java.util.ArrayList;
 
 /**
+ * Multiple Upload Sequences (If you ask which sequences are open)
  *
  * @author roland
  */

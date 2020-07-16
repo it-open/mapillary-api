@@ -5,15 +5,22 @@
  */
 package at.itopen.mapillary.image;
 
+import at.itopen.mapillary.GPSData;
 import at.itopen.mapillary.ISO8601.Json8601Deserializer;
 import at.itopen.mapillary.ISO8601.Json8601Serializer;
 import at.itopen.mapillary.Mapillary;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.net.URL;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.imageio.ImageIO;
 
 /**
+ * Image Metadata from the Rest Interface
  *
  * @author roland
  */
@@ -34,22 +41,23 @@ public class Image {
     private String sequence_key;
     private String user_key;
     private String username;
+    private GPSData gps;
 
     /**
-     * @return the ca
+     * the Direction 0-360 the Image is looking at
+     *
+     * @return the ca [0-360]
      */
     public int getCa() {
+        if (ca == null) {
+            return 0;
+        }
         return ca;
     }
 
     /**
-     * @param ca the ca to set
-     */
-    public void setCa(int ca) {
-        this.ca = ca;
-    }
-
-    /**
+     * The Camera Maker (Logitec)
+     *
      * @return the camera_make
      */
     public String getCamera_make() {
@@ -57,13 +65,8 @@ public class Image {
     }
 
     /**
-     * @param camera_make the camera_make to set
-     */
-    public void setCamera_make(String camera_make) {
-        this.camera_make = camera_make;
-    }
-
-    /**
+     * The Camera Model (C270)
+     *
      * @return the camera_model
      */
     public String getCamera_model() {
@@ -71,13 +74,8 @@ public class Image {
     }
 
     /**
-     * @param camera_model the camera_model to set
-     */
-    public void setCamera_model(String camera_model) {
-        this.camera_model = camera_model;
-    }
-
-    /**
+     * when was the Image taken
+     *
      * @return the captured_at
      */
     public Date getCaptured_at() {
@@ -85,13 +83,8 @@ public class Image {
     }
 
     /**
-     * @param captured_at the captured_at to set
-     */
-    public void setCaptured_at(Date captured_at) {
-        this.captured_at = captured_at;
-    }
-
-    /**
+     * The Uniqe Image Key
+     *
      * @return the key
      */
     public String getKey() {
@@ -99,13 +92,8 @@ public class Image {
     }
 
     /**
-     * @param key the key to set
-     */
-    public void setKey(String key) {
-        this.key = key;
-    }
-
-    /**
+     * To which organization does this Image belong to?
+     *
      * @return the organization_key
      */
     public String getOrganization_key() {
@@ -113,41 +101,32 @@ public class Image {
     }
 
     /**
-     * @param organization_key the organization_key to set
-     */
-    public void setOrganization_key(String organization_key) {
-        this.organization_key = organization_key;
-    }
-
-    /**
+     * Is it a Panorammic Image?
+     *
      * @return the pano
      */
-    public Boolean getPano() {
+    public boolean getPano() {
+        if (pano == null) {
+            return false;
+        }
         return pano;
     }
 
     /**
-     * @param pano the pano to set
-     */
-    public void setPano(Boolean pano) {
-        this.pano = pano;
-    }
-
-    /**
+     * Is it a Private Image?
+     *
      * @return the priv
      */
-    public Boolean getPriv() {
+    public boolean getPriv() {
+        if (priv == null) {
+            return false;
+        }
         return priv;
     }
 
     /**
-     * @param priv the priv to set
-     */
-    public void setPriv(Boolean priv) {
-        this.priv = priv;
-    }
-
-    /**
+     * To which sequence does this Image belong to?
+     *
      * @return the sequence_key
      */
     public String getSequence_key() {
@@ -155,13 +134,8 @@ public class Image {
     }
 
     /**
-     * @param sequence_key the sequence_key to set
-     */
-    public void setSequence_key(String sequence_key) {
-        this.sequence_key = sequence_key;
-    }
-
-    /**
+     * To which User does this Image belong to?
+     *
      * @return the user_key
      */
     public String getUser_key() {
@@ -169,13 +143,8 @@ public class Image {
     }
 
     /**
-     * @param user_key the user_key to set
-     */
-    public void setUser_key(String user_key) {
-        this.user_key = user_key;
-    }
-
-    /**
+     * The Username of the User who upladed the Image
+     *
      * @return the username
      */
     public String getUsername() {
@@ -183,20 +152,43 @@ public class Image {
     }
 
     /**
-     * @param username the username to set
+     * Fetch the Image (the jpg) from the Mapillary Server.
+     *
+     * @param fetchSize The Image Size (You can only fetch Thumbnails up to 2048
+     * @return The Image as Buffered Image or null if there was an error
      */
-    public void setUsername(String username) {
-        this.username = username;
+    public BufferedImage fetchImage(Mapillary.IMAGE_FETCH_SIZE fetchSize) {
+        try {
+            String surl = Mapillary.IMAGE_FETCH_URL;
+            surl = surl.replace("{key}", key);
+            surl = surl.replace("{size}", fetchSize.name().substring(1));
+
+            URL url = new URL(surl);
+            return ImageIO.read(url);
+
+        } catch (IOException ex) {
+            Logger.getLogger(Mapillary.class
+                    .getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
     }
 
     /**
+     * Get the GPS Coordiantes of the Image
      *
-     * @param mapillary
-     * @param fetchSize
-     * @return
+     * @return GPS Data
      */
-    public BufferedImage fetchImage(Mapillary mapillary, Mapillary.IMAGE_FETCH_SIZE fetchSize) {
-        return mapillary.getImage(this, fetchSize);
+    public GPSData getGps() {
+        return gps;
+    }
+
+    /**
+     * Used for internal setting the GPD Data
+     *
+     * @param gps GPS Coordinates
+     */
+    protected void setGps(GPSData gps) {
+        this.gps = gps;
     }
 
 }

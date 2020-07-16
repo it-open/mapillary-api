@@ -13,6 +13,7 @@ import java.util.Date;
 import java.util.List;
 
 /**
+ * Filter Sequences for the Request. You can fill in as many Fields you like
  *
  * @author roland
  */
@@ -30,43 +31,48 @@ public class SequenceFilter extends Filter {
     List<String> username = new ArrayList<>();
 
     /**
+     * The Organization the Sequences should belong to
      *
-     * @param key
+     * @param key String key
      */
     public void addOrgranizationKey(String key) {
         organizations.add(key);
     }
 
     /**
+     * The User the Sequences should belong to
      *
-     * @param key
+     * @param key String key
      */
     public void addUserKey(String key) {
         users.add(key);
     }
 
     /**
+     * The User the Sequences should belong to
      *
-     * @param user
+     * @param user User Object
      */
     public void addUser(User user) {
         addUserKey(user.getKey());
     }
 
     /**
+     * The UserName the Sequences should belong to
      *
-     * @param name
+     * @param name String
      */
     public void addUserName(String name) {
         username.add(name);
     }
 
     /**
+     * The Bounding Box of GPS Information
      *
-     * @param latMin
-     * @param latMax
-     * @param lonMin
-     * @param lonMax
+     * @param latMin Latitude min
+     * @param latMax Latitude max
+     * @param lonMin Longitude min
+     * @param lonMax Longitude max
      */
     public void setBBox(double latMin, double latMax, double lonMin, double lonMax) {
         bbox_xmin = latMin;
@@ -76,22 +82,25 @@ public class SequenceFilter extends Filter {
     }
 
     /**
+     * No sequences recorded after this time
      *
-     * @param endTime
+     * @param endTime datetime
      */
     public void setEndTime(Date endTime) {
         this.endTime = endTime;
     }
 
     /**
+     * No sequences recorded before this time
      *
-     * @param startTime
+     * @param startTime datetime
      */
     public void setStartTime(Date startTime) {
         this.startTime = startTime;
     }
 
     /**
+     * How Many Results per Page (Pageable)
      *
      * @param perPage
      */
@@ -100,32 +109,36 @@ public class SequenceFilter extends Filter {
     }
 
     /**
+     * Priavte Sequences
      *
-     * @param priv
+     * @param priv true or false
      */
     public void setPrivate(Boolean priv) {
         this.priv = priv;
     }
 
     /**
+     * Starred Sequences
      *
-     * @param starred
+     * @param priv true or false
      */
     public void setStarred(Boolean starred) {
         this.starred = starred;
     }
 
     /**
+     * Sequences with Title
      *
-     * @param title
+     * @param title String
      */
     public void setTitle(String title) {
         this.title = title;
     }
 
     /**
+     * Build the Filter Params (Internal Used)
      *
-     * @param client
+     * @param client The Rest Client to get the Request
      */
     @Override
     public void makeFilterParams(RestClient client) {

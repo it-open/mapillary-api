@@ -6,6 +6,7 @@
 package at.itopen.mapillary.user;
 
 /**
+ * User statistics
  *
  * @author roland
  */

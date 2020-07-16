@@ -44,9 +44,9 @@ import javax.imageio.ImageIO;
 public class Mapillary {
 
     private static String rootEndpoint = "https://a.mapillary.com/v3";
-    private static String ClientID = "UzZRbjZEUm1jNGFsNi1CS3g3RjNydzo4MzcyMjAyODQwOGQ1M2Qy";
-    private static String RedirectUrl = "http://localhost:9876/token";
-    private final static String IMAGE_FETCH_URL = "https://images.mapillary.com/{key}/thumb-{size}.jpg";
+    private String ClientID = "UzZRbjZEUm1jNGFsNi1CS3g3RjNydzo4MzcyMjAyODQwOGQ1M2Qy";
+    private String RedirectUrl = "http://localhost:9876/token";
+    public final static String IMAGE_FETCH_URL = "https://images.mapillary.com/{key}/thumb-{size}.jpg";
 
     private RestHttpServer httpserver;
     private String access_token = null;
@@ -459,15 +459,15 @@ public class Mapillary {
      *
      * @param ClientID
      */
-    public static void setClientID(String ClientID) {
-        Mapillary.ClientID = ClientID;
+    public void setClientID(String ClientID) {
+        this.ClientID = ClientID;
     }
 
     /**
      *
      * @return
      */
-    public static String getClientID() {
+    public String getClientID() {
         return ClientID;
     }
 
@@ -475,16 +475,16 @@ public class Mapillary {
      *
      * @param RedirectUrl
      */
-    public static void setRedirectUrl(String RedirectUrl) {
-        Mapillary.RedirectUrl = RedirectUrl;
+    public void setRedirectUrl(String RedirectUrl) {
+        this.RedirectUrl = RedirectUrl;
     }
 
     /**
      *
      * @return
      */
-    public static String getRedirectUrl() {
-        return RedirectUrl;
+    public String getRedirectUrl() {
+        return this.RedirectUrl;
     }
 
     /**

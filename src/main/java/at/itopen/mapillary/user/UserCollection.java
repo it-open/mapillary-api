@@ -9,6 +9,7 @@ import at.itopen.mapillary.Filter;
 import java.util.ArrayList;
 
 /**
+ * A Collection of all Users
  *
  * @author roland
  */
@@ -18,6 +19,7 @@ public class UserCollection extends ArrayList<User> {
     private Filter filter;
 
     /**
+     * Copied from Pageable (Internally used)
      *
      * @param linkline
      * @param filter

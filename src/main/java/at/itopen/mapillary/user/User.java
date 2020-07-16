@@ -23,6 +23,7 @@ import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 
 /**
+ * The User Metadata
  *
  * @author roland
  */
@@ -38,6 +39,8 @@ public class User {
     private String username;
 
     /**
+     * About or Bio
+     *
      * @return the about
      */
     public String getAbout() {
@@ -45,6 +48,8 @@ public class User {
     }
 
     /**
+     * Avatar Image url
+     *
      * @return the avatar
      */
     public String getAvatar() {
@@ -52,8 +57,9 @@ public class User {
     }
 
     /**
+     * Return the Avatar Image as BufferedImage
      *
-     * @return
+     * @return Avatar Image or null if error
      */
     public BufferedImage fetchAvatar() {
         try {
@@ -68,6 +74,8 @@ public class User {
     }
 
     /**
+     * When was the User created?
+     *
      * @return the created_at
      */
     public Date getCreated_at() {
@@ -75,6 +83,8 @@ public class User {
     }
 
     /**
+     * Unique User ID
+     *
      * @return the key
      */
     public String getKey() {
@@ -82,6 +92,8 @@ public class User {
     }
 
     /**
+     * The User name
+     *
      * @return the username
      */
     public String getUsername() {
@@ -89,9 +101,11 @@ public class User {
     }
 
     /**
+     * Get all Sequences which belongs to the User
      *
-     * @param mapillary
-     * @param filter
+     * @param mapillary Mapillary Object for authentication
+     * @param filter Null if no Filter, or just add what you want (User is
+     * filled in by this function)
      * @return
      */
     public SequenceCollection fetchSequences(Mapillary mapillary, SequenceFilter filter) {
@@ -103,9 +117,11 @@ public class User {
     }
 
     /**
+     * Get all Images which belongs to the User
      *
-     * @param mapillary
-     * @param filter
+     * @param mapillary Mapillary Object for authentication
+     * @param filter Null if no Filter, or just add what you want (User is
+     * filled in by this function)
      * @return
      */
     public ImageCollection fetchImages(Mapillary mapillary, ImageFilter filter) {

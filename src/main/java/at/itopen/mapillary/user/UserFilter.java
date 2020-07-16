@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * Filter Users when searching
  *
  * @author roland
  */
@@ -22,27 +23,39 @@ public class UserFilter extends Filter {
     List<String> username = new ArrayList<>();
 
     /**
+     * The User the Sequences should belong to
      *
-     * @param key
+     * @param key String key
      */
     public void addUserKey(String key) {
         users.add(key);
     }
 
     /**
+     * The User the Sequences should belong to
      *
-     * @param name
+     * @param user User Object
+     */
+    public void addUser(User user) {
+        addUserKey(user.getKey());
+    }
+
+    /**
+     * The UserName the Sequences should belong to
+     *
+     * @param name String
      */
     public void addUserName(String name) {
         username.add(name);
     }
 
     /**
+     * The Bounding Box of GPS Information
      *
-     * @param latMin
-     * @param latMax
-     * @param lonMin
-     * @param lonMax
+     * @param latMin Latitude min
+     * @param latMax Latitude max
+     * @param lonMin Longitude min
+     * @param lonMax Longitude max
      */
     public void setBBox(double latMin, double latMax, double lonMin, double lonMax) {
         bbox_xmin = latMin;
@@ -52,6 +65,7 @@ public class UserFilter extends Filter {
     }
 
     /**
+     * How Many Results per Page (Pageable)
      *
      * @param perPage
      */
@@ -60,8 +74,9 @@ public class UserFilter extends Filter {
     }
 
     /**
+     * Build the Filter Params (Internal Used)
      *
-     * @param client
+     * @param client The Rest Client to get the Request
      */
     @Override
     public void makeFilterParams(RestClient client) {

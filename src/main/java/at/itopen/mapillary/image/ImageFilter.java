@@ -14,6 +14,7 @@ import java.util.Date;
 import java.util.List;
 
 /**
+ * Filter Images for the Request. You can fill in as many Fields you like
  *
  * @author roland
  */
@@ -36,75 +37,84 @@ public class ImageFilter extends Filter {
     List<String> username = new ArrayList<>();
 
     /**
+     * The Organization the Images should belong to
      *
-     * @param key
+     * @param key String Key
      */
     public void addOrgranizationKey(String key) {
         organizations.add(key);
     }
 
     /**
+     * The User the Images should belong to
      *
-     * @param key
+     * @param key String Key
      */
     public void addUserKey(String key) {
         users.add(key);
     }
 
     /**
+     * The Organization the Images should belong to
      *
-     * @param user
+     * @param user User Object
      */
     public void addUser(User user) {
         addUserKey(user.getKey());
     }
 
     /**
+     * The User Name the Images should belong to
      *
-     * @param name
+     * @param name String name
      */
     public void addUserName(String name) {
         username.add(name);
     }
 
     /**
+     * The Sequence the Images should belong to
      *
-     * @param key
+     * @param key Sequence Key
      */
     public void addSequence(String key) {
         sequencekeys.add(key);
     }
 
     /**
+     * The Sequence the Images should belong to
      *
-     * @param sequence
+     * @param sequence The sequence Object
      */
     public void addSequence(Sequence sequence) {
         sequencekeys.add(sequence.getKey());
     }
 
     /**
+     * Defined Images Keys
      *
-     * @param key
+     * @param key String key
      */
     public void addImage(String key) {
         imagekeys.add(key);
     }
 
     /**
+     * Defined Images (Ist this Useful?)
      *
-     * @param image
+     * @param image Image Object
      */
     public void addImage(Image image) {
         imagekeys.add(image.getKey());
     }
 
     /**
+     * The Bounding Box of GPS Information
      *
-     * @param latMin
-     * @param latMax
-     * @param lonMin
-     * @param lonMax
+     * @param latMin Latitude min
+     * @param latMax Latitude max
+     * @param lonMin Longitude min
+     * @param lonMax Longitude max
      */
     public void setBBox(double latMin, double latMax, double lonMin, double lonMax) {
         bbox_xmin = latMin;
@@ -114,9 +124,10 @@ public class ImageFilter extends Filter {
     }
 
     /**
+     * All Images that look at this certain point
      *
-     * @param lat
-     * @param lon
+     * @param lat Latitude of Point
+     * @param lon Longitude of Point
      */
     public void setLookat(double lat, double lon) {
         lookat_lat = lat;
@@ -124,9 +135,10 @@ public class ImageFilter extends Filter {
     }
 
     /**
+     * All Images that are close to this certain point
      *
-     * @param lat
-     * @param lon
+     * @param lat Latitude of Point
+     * @param lon Longitude of Point
      */
     public void setCloseto(double lat, double lon) {
         closeto_lat = lat;
@@ -134,22 +146,25 @@ public class ImageFilter extends Filter {
     }
 
     /**
+     * No images recorded after this time
      *
-     * @param endTime
+     * @param endTime datetime
      */
     public void setEndTime(Date endTime) {
         this.endTime = endTime;
     }
 
     /**
+     * No Iages recorded before this time
      *
-     * @param startTime
+     * @param startTime datetime
      */
     public void setStartTime(Date startTime) {
         this.startTime = startTime;
     }
 
     /**
+     * How Many Results per Page (Pageable)
      *
      * @param perPage
      */
@@ -158,40 +173,45 @@ public class ImageFilter extends Filter {
     }
 
     /**
+     * Priavte Images
      *
-     * @param priv
+     * @param priv true or false
      */
     public void setPrivate(Boolean priv) {
         this.priv = priv;
     }
 
     /**
+     * Panoramic Images
      *
-     * @param pano
+     * @param pano trueor false
      */
     public void setPano(Boolean pano) {
         this.pano = pano;
     }
 
     /**
+     * A Radius for the Close To
      *
-     * @param radius
+     * @param radius Meters of radius
      */
     public void setRadius(Long radius) {
         this.radius = radius;
     }
 
     /**
+     * Image with certain titles
      *
-     * @param title
+     * @param title String
      */
     public void setTitle(String title) {
         this.title = title;
     }
 
     /**
+     * Build the Filter Params (Internal Used)
      *
-     * @param client
+     * @param client The Rest Client to get the Request
      */
     @Override
     public void makeFilterParams(RestClient client) {

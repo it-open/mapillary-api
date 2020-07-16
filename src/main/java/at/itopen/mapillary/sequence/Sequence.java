@@ -15,6 +15,7 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import java.util.Date;
 
 /**
+ * A Sequence is a series of Images
  *
  * @author roland
  */
@@ -40,6 +41,8 @@ public class Sequence {
     private String username;
 
     /**
+     * What Camera was used
+     *
      * @return the camera_make
      */
     public String getCamera_make() {
@@ -47,13 +50,8 @@ public class Sequence {
     }
 
     /**
-     * @param camera_make the camera_make to set
-     */
-    public void setCamera_make(String camera_make) {
-        this.camera_make = camera_make;
-    }
-
-    /**
+     * When was the Squence Captured
+     *
      * @return the captured_at
      */
     public Date getCaptured_at() {
@@ -61,13 +59,8 @@ public class Sequence {
     }
 
     /**
-     * @param captured_at the captured_at to set
-     */
-    public void setCaptured_at(Date captured_at) {
-        this.captured_at = captured_at;
-    }
-
-    /**
+     * Propertis of the Images
+     *
      * @return the coordinateProperties
      */
     public SequenceProperties getCoordinateProperties() {
@@ -75,13 +68,8 @@ public class Sequence {
     }
 
     /**
-     * @param coordinateProperties the coordinateProperties to set
-     */
-    public void setCoordinateProperties(SequenceProperties coordinateProperties) {
-        this.coordinateProperties = coordinateProperties;
-    }
-
-    /**
+     * When was the Sequence created (Uploaded)
+     *
      * @return the created_at
      */
     public Date getCreated_at() {
@@ -89,13 +77,8 @@ public class Sequence {
     }
 
     /**
-     * @param created_at the created_at to set
-     */
-    public void setCreated_at(Date created_at) {
-        this.created_at = created_at;
-    }
-
-    /**
+     * The Uniqe Sequence Key
+     *
      * @return the key
      */
     public String getKey() {
@@ -103,13 +86,8 @@ public class Sequence {
     }
 
     /**
-     * @param key the key to set
-     */
-    public void setKey(String key) {
-        this.key = key;
-    }
-
-    /**
+     * To which Organization does the Sequence belong to
+     *
      * @return the organization_key
      */
     public String getOrganization_key() {
@@ -117,13 +95,8 @@ public class Sequence {
     }
 
     /**
-     * @param organization_key the organization_key to set
-     */
-    public void setOrganization_key(String organization_key) {
-        this.organization_key = organization_key;
-    }
-
-    /**
+     * Panoramic Images?
+     *
      * @return the pano
      */
     public Boolean getPano() {
@@ -131,13 +104,8 @@ public class Sequence {
     }
 
     /**
-     * @param pano the pano to set
-     */
-    public void setPano(Boolean pano) {
-        this.pano = pano;
-    }
-
-    /**
+     * Private Sequence
+     *
      * @return the priv
      */
     public Boolean getPriv() {
@@ -145,13 +113,8 @@ public class Sequence {
     }
 
     /**
-     * @param priv the priv to set
-     */
-    public void setPriv(Boolean priv) {
-        this.priv = priv;
-    }
-
-    /**
+     * To which User does the Sequence belong to
+     *
      * @return the user_key
      */
     public String getUser_key() {
@@ -159,13 +122,8 @@ public class Sequence {
     }
 
     /**
-     * @param user_key the user_key to set
-     */
-    public void setUser_key(String user_key) {
-        this.user_key = user_key;
-    }
-
-    /**
+     * To which Username does the Sequence belong to
+     *
      * @return the username
      */
     public String getUsername() {
@@ -173,17 +131,12 @@ public class Sequence {
     }
 
     /**
-     * @param username the username to set
-     */
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    /**
+     * Get all Images that belong to the Sequence
      *
-     * @param mapillary
-     * @param filter
-     * @return
+     * @param mapillary The Mapillary Object for the Authentication
+     * @param filter Null if no Filter, if you provide one the sequence Filter
+     * will be added
+     * @return List of all Images
      */
     public ImageCollection fetchImages(Mapillary mapillary, ImageFilter filter) {
         if (filter == null) {

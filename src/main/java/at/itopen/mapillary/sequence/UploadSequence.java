@@ -14,6 +14,8 @@ import java.util.Date;
 import java.util.Map;
 
 /**
+ * The UploadSequence is a a Representation of an Upload Process. When you have
+ * a sequence means that the Upload is initiated.
  *
  * @author roland
  */
@@ -22,6 +24,7 @@ public class UploadSequence {
     private Mapillary mapillary;
 
     /**
+     * Used Internally the Mapillary Object for authentication
      *
      * @param mapillary
      */
@@ -30,14 +33,14 @@ public class UploadSequence {
     }
 
     /**
-     *
+     * Delte the Sequence. All Information and Images are lost
      */
     public void delete() {
         mapillary.deleteUpload(key);
     }
 
     /**
-     *
+     * Publish the Sequence. All Images are being processed
      */
     public void publish() {
         mapillary.publishUpload(key);
@@ -58,6 +61,8 @@ public class UploadSequence {
     private String url;
 
     /**
+     * When was the sequence created
+     *
      * @return the created_at
      */
     public Date getCreated_at() {
@@ -65,6 +70,8 @@ public class UploadSequence {
     }
 
     /**
+     * Fields from Mapillary needed for Upload of the Images (Pass Through)
+     *
      * @return the fields
      */
     public Map<String, String> getFields() {
@@ -72,6 +79,8 @@ public class UploadSequence {
     }
 
     /**
+     * The client used for Upload (ClientID)
+     *
      * @return the client
      */
     public String getClient() {
@@ -79,6 +88,8 @@ public class UploadSequence {
     }
 
     /**
+     * the unique id
+     *
      * @return the key
      */
     public String getKey() {
@@ -86,6 +97,8 @@ public class UploadSequence {
     }
 
     /**
+     * Key Prefix used for uploading images
+     *
      * @return the key_prefix
      */
     public String getKey_prefix() {
@@ -93,6 +106,8 @@ public class UploadSequence {
     }
 
     /**
+     * Sequence published date ??
+     *
      * @return the signed_at
      */
     public Date getSigned_at() {
@@ -100,6 +115,8 @@ public class UploadSequence {
     }
 
     /**
+     * status of the Sequence (open/closed)
+     *
      * @return the status
      */
     public String getStatus() {
@@ -107,6 +124,8 @@ public class UploadSequence {
     }
 
     /**
+     * Sequence Type
+     *
      * @return the type
      */
     public String getType() {
@@ -114,13 +133,8 @@ public class UploadSequence {
     }
 
     /**
-     * @param type the type to set
-     */
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    /**
+     * Url for Image Upload
+     *
      * @return the url
      */
     public String getUrl() {
