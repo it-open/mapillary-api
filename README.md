@@ -1,5 +1,7 @@
 # Mapillary Java API
 
+![Image](https://github.com/it-open/mapillary-api/raw/master/doc/graphics.png)
+
 Mapillay API as Java Library see https://www.mapillary.com/developer/api-documentation/
 This Project should wrap the complete API with Java Functions and Objects.
 
