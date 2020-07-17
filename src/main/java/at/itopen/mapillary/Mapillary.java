@@ -38,6 +38,7 @@ import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 
 /**
+ * The Main Mapillary function class
  *
  * @author roland
  */
@@ -45,23 +46,18 @@ public class Mapillary {
 
     private static String rootEndpoint = "https://a.mapillary.com/v3";
     private String ClientID = "UzZRbjZEUm1jNGFsNi1CS3g3RjNydzo4MzcyMjAyODQwOGQ1M2Qy";
+    private String ClientSecret = "ODUzYWNhNTBlMDNlZjM2ZTIyYjU3Y2Y1NjBmOGIyMzc=";
     private String RedirectUrl = "http://localhost:9876/token";
     public final static String IMAGE_FETCH_URL = "https://images.mapillary.com/{key}/thumb-{size}.jpg";
 
     private RestHttpServer httpserver;
     private String access_token = null;
-    private Boolean access = null;
 
     /**
+     * start the Oauth Mecahnism. A Webserver is started to wait for the token
+     * http://localhost:[port]/token
      *
-     */
-    public Mapillary() {
-
-    }
-
-    /**
-     *
-     * @param port
+     * @param port Port of the Webserver
      */
     public void startOAuthServer(Integer port) {
         if (httpserver != null) {
@@ -76,10 +72,8 @@ public class Mapillary {
             @Override
             public void Call(Conversion conversion, Map<String, String> params) {
                 access_token = conversion.getRequest().getParam("access_token");
-                System.out.println(access_token);
-                access = access_token != null;
                 conversion.getResponse().setContentType(ContentType.HTML);
-                conversion.getResponse().setData("<html><h1>READY</h1></html>");
+                conversion.getResponse().setData("<html><h1>Authorized</h1>Please Close this window. Thank you!</html>");
             }
         });
         final RestHttpServer h = httpserver;
@@ -98,12 +92,15 @@ public class Mapillary {
     }
 
     /**
+     * Wait for the Accesstoken to arrive. If successful the webserver will
+     * shutdown
      *
-     * @param timeoutSeconds
+     * @param timeoutSeconds (how long to wait)
+     * @return true if successfully authorized
      */
-    public void waitforAccess(int timeoutSeconds) {
+    public boolean waitforAccess(int timeoutSeconds) {
         timeoutSeconds = timeoutSeconds * 100;
-        while (access == null) {
+        while (!hasAccess()) {
             try {
                 sleep(10);
             } catch (InterruptedException ex) {
@@ -111,36 +108,21 @@ public class Mapillary {
             }
             timeoutSeconds--;
             if (timeoutSeconds == 0) {
-                return;
+                return false;
             }
         }
-        if (Boolean.TRUE.equals(access)) {
+        if (hasAccess()) {
             httpserver.shutdown();
-            //provisionAccessToken();
+            return true;
         }
-
+        return false;
     }
 
     /**
+     * Get a List of all Sequences
      *
-     */
-    public void provisionAccessToken() {
-        RestClient rc = new RestClient(rootEndpoint + "/oauth/token", RestClient.REST_METHOD.POST);
-        rc.setMultipart(false);
-        rc.authKey(access_token);
-        rc.setParameter("client_id", ClientID);
-        //  rc.setParameter("client_secret", ClientSecret);
-        //  rc.setParameter("redirect_uri", RedirectUrl);
-        //  rc.setParameter("grant_type", "bearer");
-        //  rc.setParameter("code", access_token);
-        RestResponse rr = rc.toSingle(true);
-        System.out.println(rr.getDataAsString());
-    }
-
-    /**
-     *
-     * @param filter
-     * @return
+     * @param filter Filter Object for Sequences
+     * @return a Collection of Objects
      */
     public SequenceCollection getSequences(SequenceFilter filter) {
         RestClient rc = new RestClient(rootEndpoint + "/sequences", RestClient.REST_METHOD.GET);
@@ -154,8 +136,9 @@ public class Mapillary {
     }
 
     /**
+     * Create a upload sequence
      *
-     * @return
+     * @return A UploadSequence Object or null on error
      */
     public UploadSequence startUpload() {
         RestClient rc = new RestClient(rootEndpoint + "/me/uploads?client_id=" + ClientID, RestClient.REST_METHOD.POST);
@@ -171,9 +154,10 @@ public class Mapillary {
     }
 
     /**
+     * Upload an Image to the UploadSequence
      *
-     * @param file
-     * @param uploadSequence
+     * @param file The Image File
+     * @param uploadSequence The UploadSequence
      */
     public void uploadImage(File file, UploadSequence uploadSequence) {
         RestClient rc = new RestClient(uploadSequence.getUrl(), RestClient.REST_METHOD.POST);
@@ -187,11 +171,12 @@ public class Mapillary {
     }
 
     /**
+     * Get an UploadSequence by its key
      *
-     * @param key
-     * @return
+     * @param key Uniqe key of sequence
+     * @return the Uploadsequence or null if error or no found
      */
-    public UploadSequence getUpload(String key) {
+    public UploadSequence getUploadSequence(String key) {
         RestClient rc = new RestClient(rootEndpoint + "/me/uploads/" + key, RestClient.REST_METHOD.GET);
         rc.authKey(access_token);
         rc.setParameter("client_id", ClientID);
@@ -202,8 +187,9 @@ public class Mapillary {
     }
 
     /**
+     * Publish an Upload Sequence
      *
-     * @param key
+     * @param key Key of the Sequence
      */
     public void publishUpload(String key) {
         RestClient rc = new RestClient(rootEndpoint + "/me/uploads/" + key + "/closed", RestClient.REST_METHOD.PUT);
@@ -213,8 +199,9 @@ public class Mapillary {
     }
 
     /**
+     * delete an UploadSequence
      *
-     * @param key
+     * @param key key of the sequence
      */
     public void deleteUpload(String key) {
         RestClient rc = new RestClient(rootEndpoint + "/me/uploads/" + key, RestClient.REST_METHOD.DELETE);
@@ -224,8 +211,9 @@ public class Mapillary {
     }
 
     /**
+     * Get a List of all open Upload Sequences
      *
-     * @return
+     * @return List of Sequences
      */
     public UploadSequenceCollection getOpenUpload() {
         RestClient rc = new RestClient(rootEndpoint + "/me/uploads/", RestClient.REST_METHOD.GET);
@@ -238,9 +226,10 @@ public class Mapillary {
     }
 
     /**
+     * Get all Images according to Filter
      *
-     * @param filter
-     * @return
+     * @param filter FilterObject
+     * @return List of Images
      */
     public ImageCollection getImages(ImageFilter filter) {
         RestClient rc = new RestClient(rootEndpoint + "/images", RestClient.REST_METHOD.GET);
@@ -255,9 +244,10 @@ public class Mapillary {
     }
 
     /**
+     * Get All Users according to Filter
      *
-     * @param filter
-     * @return
+     * @param filter FilterObject
+     * @return List of users
      */
     public UserCollection getUsers(UserFilter filter) {
         RestClient rc = new RestClient(rootEndpoint + "/users", RestClient.REST_METHOD.GET);
@@ -272,43 +262,45 @@ public class Mapillary {
     }
 
     /**
-     *
+     * Size Of Images for Image downloading
      */
     public enum IMAGE_FETCH_SIZE {
 
         /**
-         *
+         * 320px
          */
         i320,
         /**
-         *
+         * 640px
          */
         i640,
         /**
-         *
+         * 1024px
          */
         i1024,
         /**
-         *
+         * 2048px
          */
         i2048
     };
 
     /**
+     * get an Image Data
      *
-     * @param image
-     * @param fetchSize
-     * @return
+     * @param image The Image Metadata
+     * @param fetchSize Size of the Image to fetch
+     * @return the Image or null on error
      */
     public BufferedImage getImage(Image image, IMAGE_FETCH_SIZE fetchSize) {
         return getImage(image.getKey(), fetchSize);
     }
 
     /**
+     * get an Image Data
      *
-     * @param imageKey
-     * @param fetchSize
-     * @return
+     * @param imageKey the Image key
+     * @param fetchSize Size of the image to fetch
+     * @return the Image or null on error
      */
     public BufferedImage getImage(String imageKey, IMAGE_FETCH_SIZE fetchSize) {
         try {
@@ -327,9 +319,10 @@ public class Mapillary {
     }
 
     /**
+     * Get a User by its key
      *
-     * @param key
-     * @return
+     * @param key Key of the User
+     * @return User Metadata
      */
     public User getUser(String key) {
         RestClient rc = new RestClient(rootEndpoint + "/users/" + key, RestClient.REST_METHOD.GET);
@@ -342,8 +335,9 @@ public class Mapillary {
     }
 
     /**
+     * Get the logged in User
      *
-     * @return
+     * @return return the User Metadata of the logged in User
      */
     public User getMe() {
         RestClient rc = new RestClient(rootEndpoint + "/me", RestClient.REST_METHOD.GET);
@@ -356,9 +350,10 @@ public class Mapillary {
     }
 
     /**
+     * Get Statistics about the User
      *
-     * @param key
-     * @return
+     * @param key Key of the User
+     * @return UserStatistics Metadata
      */
     public UserStatistic getUserStatistc(String key) {
         RestClient rc = new RestClient(rootEndpoint + "/users/" + key + "/stats", RestClient.REST_METHOD.GET);
@@ -372,16 +367,18 @@ public class Mapillary {
     }
 
     /**
+     * Check if you have an Access token
      *
-     * @return
+     * @return true is Access Token is here
      */
-    public Boolean hasAccess() {
-        return access;
+    public boolean hasAccess() {
+        return (access_token != null);
 
     }
 
     /**
-     *
+     * Scope of rights.
+     * https://www.mapillary.com/developer/api-documentation/#scopes
      */
     public static enum SCOPE {
 
@@ -424,8 +421,9 @@ public class Mapillary {
     };
 
     /**
+     * Open the Browser and request a Token
      *
-     * @param scopes
+     * @param scopes Which rights do you want?
      */
     public void startOAuth(SCOPE... scopes) {
 
@@ -456,6 +454,7 @@ public class Mapillary {
     }
 
     /**
+     * The Client ID https://www.mapillary.com/dashboard/developers
      *
      * @param ClientID
      */
@@ -464,6 +463,7 @@ public class Mapillary {
     }
 
     /**
+     * The Client ID https://www.mapillary.com/dashboard/developers
      *
      * @return
      */
@@ -472,6 +472,7 @@ public class Mapillary {
     }
 
     /**
+     * Callback Url https://www.mapillary.com/dashboard/developers
      *
      * @param RedirectUrl
      */
@@ -480,6 +481,7 @@ public class Mapillary {
     }
 
     /**
+     * Callback url https://www.mapillary.com/dashboard/developers
      *
      * @return
      */
@@ -488,6 +490,7 @@ public class Mapillary {
     }
 
     /**
+     * get an Access token via OAuth or just put it here
      *
      * @param access_token
      */
@@ -496,6 +499,7 @@ public class Mapillary {
     }
 
     /**
+     * get the Acces Token you got from Oauth
      *
      * @return
      */
