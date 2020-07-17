@@ -12,6 +12,7 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 
 /**
+ * Converter for Dates to special ISO8601 Format and Vica versa
  *
  * @author roland
  */

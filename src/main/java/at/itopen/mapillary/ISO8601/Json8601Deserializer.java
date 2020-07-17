@@ -16,16 +16,18 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
+ * ISO8601 String to Date converter for Jackson
  *
  * @author roland
  */
 public class Json8601Deserializer extends JsonDeserializer<Date> {
 
     /**
+     * Deserializer is called by Jackson
      *
-     * @param arg0
-     * @param arg1
-     * @return
+     * @param arg0 Parsed JSON data
+     * @param arg1 Context
+     * @return Date
      * @throws IOException
      * @throws JsonProcessingException
      */

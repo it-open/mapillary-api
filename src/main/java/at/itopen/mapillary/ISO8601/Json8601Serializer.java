@@ -12,16 +12,18 @@ import java.io.IOException;
 import java.util.Date;
 
 /**
+ * Date to ISO8601 String converter for Jackson
  *
  * @author roland
  */
 public class Json8601Serializer extends JsonSerializer<Date> {
 
     /**
+     * Serializer for jackson
      *
-     * @param arg0
-     * @param arg1
-     * @param arg2
+     * @param arg0 The original Date
+     * @param arg1 The JSon Gernerator
+     * @param arg2 Serializer
      * @throws IOException
      */
     @Override
