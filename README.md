@@ -16,9 +16,9 @@ It is Work in Progress.
 * Example Code
 
 ## What to Come ##
-* image Upload
+* image Upload (Implemented but not tested)
 * Everything Else: Changeset, Map Features, Object Detection 
-* Documentation
+
 Just give me time to implement it or help.
 
 ## How to use it ##
