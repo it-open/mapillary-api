@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * Geometry means the GPS coordiantes
  *
  * @author roland
  */
@@ -18,13 +19,15 @@ public class GeoJSONGeometry {
     private List<List<Double>> coordinates;
 
     /**
-     *
+     * make a new List of Coordinates
      */
     public GeoJSONGeometry() {
         coordinates = new ArrayList<>();
     }
 
     /**
+     * List Type (point-just singe or line- multiple)
+     *
      * @return the type
      */
     public String getType() {
@@ -32,24 +35,12 @@ public class GeoJSONGeometry {
     }
 
     /**
-     * @param type the type to set
-     */
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    /**
+     * Get the Coordinates
+     *
      * @return the coordinates
      */
     public List<List<Double>> getCoordinates() {
         return coordinates;
-    }
-
-    /**
-     * @param coordinates the coordinates to set
-     */
-    public void setCoordinates(List<List<Double>> coordinates) {
-        this.coordinates = coordinates;
     }
 
 }

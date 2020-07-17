@@ -6,6 +6,7 @@
 package at.itopen.mapillary;
 
 /**
+ * There are multiple Pages for a Collection how to get to the next page
  *
  * @author roland
  */
@@ -15,9 +16,10 @@ public class PageableResult {
     private Filter filter;
 
     /**
+     * internal Used save all Information for the next page
      *
-     * @param linkline
-     * @param filter
+     * @param linkline Headerfield Link
+     * @param filter the Filter which is being used
      */
     protected void parsePageable(String linkline, Filter filter) {
         this.filter = filter;
@@ -63,6 +65,7 @@ public class PageableResult {
     }
 
     /**
+     * return the Filter
      *
      * @return
      */
@@ -71,22 +74,7 @@ public class PageableResult {
     }
 
     /**
-     *
-     * @param pageableNext
-     */
-    public void setPageableNext(String pageableNext) {
-        this.pageableNext = pageableNext;
-    }
-
-    /**
-     *
-     * @param pageablePrev
-     */
-    public void setPageablePrev(String pageablePrev) {
-        this.pageablePrev = pageablePrev;
-    }
-
-    /**
+     * next found?
      *
      * @return
      */
@@ -95,16 +83,18 @@ public class PageableResult {
     }
 
     /**
+     * get the Key to the next page
      *
-     * @return
+     * @return key
      */
     public String getPageableNext() {
         return pageableNext;
     }
 
     /**
+     * get the Key to the last page
      *
-     * @return
+     * @return key
      */
     public String getPageablePrev() {
         return pageablePrev;

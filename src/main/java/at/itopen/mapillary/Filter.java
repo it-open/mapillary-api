@@ -6,21 +6,24 @@ import java.util.Date;
 import java.util.List;
 
 /**
+ * Base Class for all Filters (ImageFilter, Seuqence Filter)
  *
  * @author roland
  */
 public abstract class Filter {
 
     /**
+     * Build the Filter Params (Internal Used)
      *
-     * @param client
+     * @param client The Rest Client to get the Request
      */
     public abstract void makeFilterParams(RestClient client);
 
     /**
+     * Convert Date to ISO8601 String
      *
-     * @param date
-     * @return
+     * @param date The Date
+     * @return The String
      */
     protected String cDate(Date date) {
         if (date == null) {
@@ -30,9 +33,10 @@ public abstract class Filter {
     }
 
     /**
+     * Convert Number to compatible String
      *
-     * @param value
-     * @return
+     * @param value Any Number
+     * @return the String
      */
     protected String cNumber(Number value) {
         if (value == null) {
@@ -42,9 +46,10 @@ public abstract class Filter {
     }
 
     /**
+     * Convert a Boolean to String
      *
-     * @param value
-     * @return
+     * @param value Boolean Value
+     * @return "true" if true otherwise "false"
      */
     protected String cBool(Boolean value) {
         if (Boolean.TRUE.equals(value)) {
@@ -54,9 +59,10 @@ public abstract class Filter {
     }
 
     /**
+     * Convert a String List to a String
      *
-     * @param value
-     * @return
+     * @param value List of Strings
+     * @return text,text,text
      */
     protected String cList(List<String> value) {
         StringBuilder sb = new StringBuilder();

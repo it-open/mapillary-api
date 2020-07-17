@@ -6,9 +6,10 @@
 package at.itopen.mapillary;
 
 /**
+ * Geo JSON Expression from Mapillary
  *
  * @author roland
- * @param <T>
+ * @param <T> Class used for Paramter
  */
 public class GeoJSON<T> {
 
@@ -17,13 +18,15 @@ public class GeoJSON<T> {
     private T properties;
 
     /**
-     *
+     * Make a new Object
      */
     public GeoJSON() {
         geometry = new GeoJSONGeometry();
     }
 
     /**
+     * Get the GeoJSON type
+     *
      * @return the type
      */
     public String getType() {
@@ -31,13 +34,8 @@ public class GeoJSON<T> {
     }
 
     /**
-     * @param type the type to set
-     */
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    /**
+     * Get the coordinates
+     *
      * @return the geometry
      */
     public GeoJSONGeometry getGeometry() {
@@ -45,24 +43,12 @@ public class GeoJSON<T> {
     }
 
     /**
-     * @param geometry the geometry to set
-     */
-    public void setGeometry(GeoJSONGeometry geometry) {
-        this.geometry = geometry;
-    }
-
-    /**
+     * Get the data
+     *
      * @return the properties
      */
     public T getProperties() {
         return properties;
-    }
-
-    /**
-     * @param properties the properties to set
-     */
-    public void setProperties(T properties) {
-        this.properties = properties;
     }
 
 }

@@ -9,9 +9,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * List of geoJSON Objects
  *
  * @author roland
- * @param <T>
+ * @param <T> the Data Object Class
  */
 public abstract class GeoJSONCollection<T> extends PageableResult {
 
@@ -19,8 +20,9 @@ public abstract class GeoJSONCollection<T> extends PageableResult {
     private List<GeoJSON<T>> features;
 
     /**
+     * Return all Enries as List
      *
-     * @return
+     * @return a List of all Entries
      */
     public List<T> asList() {
         List<T> values = new ArrayList<>();
@@ -35,6 +37,8 @@ public abstract class GeoJSONCollection<T> extends PageableResult {
     protected abstract void update(T data, GeoJSON<T> original);
 
     /**
+     * Get the Geojson Type
+     *
      * @return the type
      */
     public String getType() {
@@ -42,6 +46,8 @@ public abstract class GeoJSONCollection<T> extends PageableResult {
     }
 
     /**
+     * Return a List of all Features (means Objects)
+     *
      * @return the features
      */
     public List<GeoJSON<T>> getFeatures() {
