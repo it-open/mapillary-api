@@ -21,8 +21,8 @@ public class UserCollection extends ArrayList<User> {
     /**
      * Copied from Pageable (Internally used)
      *
-     * @param linkline
-     * @param filter
+     * @param linkline header link
+     * @param filter original filter
      */
     public void parsePageable(String linkline, Filter filter) {
         this.filter = filter;
@@ -68,48 +68,36 @@ public class UserCollection extends ArrayList<User> {
     }
 
     /**
+     * return the Filter
      *
-     * @return
+     * @return data
      */
     public Filter getFilter() {
         return filter;
     }
 
     /**
+     * next found?
      *
-     * @param pageableNext
-     */
-    public void setPageableNext(String pageableNext) {
-        this.pageableNext = pageableNext;
-    }
-
-    /**
-     *
-     * @param pageablePrev
-     */
-    public void setPageablePrev(String pageablePrev) {
-        this.pageablePrev = pageablePrev;
-    }
-
-    /**
-     *
-     * @return
+     * @return data
      */
     public boolean isPageabe() {
         return this.pageableNext != null;
     }
 
     /**
+     * get the Key to the next page
      *
-     * @return
+     * @return key
      */
     public String getPageableNext() {
         return pageableNext;
     }
 
     /**
+     * get the Key to the last page
      *
-     * @return
+     * @return key
      */
     public String getPageablePrev() {
         return pageablePrev;

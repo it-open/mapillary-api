@@ -34,6 +34,12 @@ public abstract class GeoJSONCollection<T> extends PageableResult {
         return values;
     }
 
+    /**
+     * Update the Object with GPS Info
+     *
+     * @param data the Object
+     * @param original the Original GeoJson data
+     */
     protected abstract void update(T data, GeoJSON<T> original);
 
     /**

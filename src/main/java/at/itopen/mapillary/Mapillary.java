@@ -48,6 +48,10 @@ public class Mapillary {
     private String ClientID = "UzZRbjZEUm1jNGFsNi1CS3g3RjNydzo4MzcyMjAyODQwOGQ1M2Qy";
     private String ClientSecret = "ODUzYWNhNTBlMDNlZjM2ZTIyYjU3Y2Y1NjBmOGIyMzc=";
     private String RedirectUrl = "http://localhost:9876/token";
+
+    /**
+     *
+     */
     public final static String IMAGE_FETCH_URL = "https://images.mapillary.com/{key}/thumb-{size}.jpg";
 
     private RestHttpServer httpserver;

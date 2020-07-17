@@ -67,7 +67,7 @@ public class PageableResult {
     /**
      * return the Filter
      *
-     * @return
+     * @return data
      */
     public Filter getFilter() {
         return filter;
@@ -76,7 +76,7 @@ public class PageableResult {
     /**
      * next found?
      *
-     * @return
+     * @return data
      */
     public boolean isPageabe() {
         return this.pageableNext != null;

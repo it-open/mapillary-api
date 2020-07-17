@@ -120,7 +120,7 @@ public class SequenceFilter extends Filter {
     /**
      * Starred Sequences
      *
-     * @param priv true or false
+     * @param starred
      */
     public void setStarred(Boolean starred) {
         this.starred = starred;

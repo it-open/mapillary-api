@@ -67,7 +67,7 @@ public class UserFilter extends Filter {
     /**
      * How Many Results per Page (Pageable)
      *
-     * @param perPage
+     * @param perPage numbers of results per page
      */
     public void setPerPage(long perPage) {
         this.perPage = perPage;
