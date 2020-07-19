@@ -31,10 +31,9 @@
   </developers>
     <dependencies>
         <dependency>
-            <groupId>at.it-open</groupId>
+            <groupId>at.itopen</groupId>
             <artifactId>SimpleRest</artifactId>
-            <version>0.4.1</version>
-            <classifier>jar-with-dependencies</classifier>
+            <version>0.4.2</version>
         </dependency>
         <dependency>
             <groupId>com.github.mjeanroy</groupId>
